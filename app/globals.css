@@ -1146,3 +1146,216 @@ button { font-family: inherit; }
   .value-grid { grid-template-columns: 1fr; gap: 18px; }
   .value-cell { padding: 24px 20px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   CASE STUDY — Logo-first hero & full-width body statements
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Hero: client logo scaled to be the dominant visual element */
+.case-client-mark-hero {
+  margin-top: 36px;
+  margin-bottom: 28px;
+  color: var(--fg);
+  opacity: 0.92;
+}
+.case-client-mark-hero .client-mark-wrap,
+.case-client-mark-hero svg.client-mark {
+  width: 280px !important;
+  height: 88px !important;
+}
+
+/* Client name: large, bold, above the project title */
+.case-client-name-hero {
+  font-family: var(--font-display, inherit);
+  font-size: clamp(40px, 7vw, 100px);
+  font-weight: 200;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: var(--fg);
+  margin-bottom: 20px;
+}
+
+/* Project title: the specific description, flows full width */
+.case-project-title {
+  font-size: clamp(18px, 2.4vw, 30px);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--fg-muted);
+  max-width: 68ch;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+/* Summary: one clean sentence */
+.case-summary-line {
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.65;
+  color: var(--fg-muted);
+  max-width: 60ch;
+  font-weight: 300;
+}
+
+/* Body h2: a long declarative statement, no wrapping truncation */
+.case-statement-h2 {
+  font-size: clamp(26px, 3.2vw, 44px);
+  font-weight: 200;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  /* Intentionally no maxWidth — the sentence flows across the full column */
+  width: 100%;
+}
+
+/* Body paragraph: full column width, no 62ch restriction */
+.case-body-p {
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.75;
+  color: var(--fg-muted);
+  margin-bottom: 22px;
+  width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CONTEXTUAL FOOTER — page-aware CTA strip above the standard footer
+   ═══════════════════════════════════════════════════════════════════ */
+
+.footer-context-strip {
+  padding: clamp(64px, 8vw, 120px) clamp(20px, 5vw, 80px);
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  background: var(--bg-deep);
+}
+.footer-context-heading {
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  max-width: 18ch;
+  color: var(--fg);
+}
+.footer-context-sub {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--fg-muted);
+  max-width: 44ch;
+  margin-top: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   OUTCOMES TICKER — horizontal marquee of results
+   ═══════════════════════════════════════════════════════════════════ */
+
+.outcomes-ticker {
+  overflow: hidden;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  background: var(--bg-deep);
+  padding: 18px 0;
+  white-space: nowrap;
+  position: relative;
+}
+.outcomes-ticker::before,
+.outcomes-ticker::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.outcomes-ticker::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-deep), transparent);
+}
+.outcomes-ticker::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-deep), transparent);
+}
+.outcomes-ticker-track {
+  display: inline-flex;
+  gap: 0;
+  animation: ticker-scroll 38s linear infinite;
+}
+.outcomes-ticker-track:hover {
+  animation-play-state: paused;
+}
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 40px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.ticker-client {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.ticker-result {
+  color: var(--fg);
+  font-weight: 300;
+}
+.ticker-sep {
+  color: var(--hairline-strong);
+  font-size: 18px;
+  font-weight: 100;
+}
+
+@media (max-width: 640px) {
+  .case-client-mark-hero svg.client-mark,
+  .case-client-mark-hero .client-mark-wrap {
+    width: 200px !important;
+    height: 64px !important;
+  }
+  .footer-context-strip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   WORK INDEX — Client name front and center
+   ═══════════════════════════════════════════════════════════════════ */
+
+.work-copy-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Client name: dominant label in the row */
+.work-client-name {
+  font-size: clamp(18px, 2.2vw, 26px);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  line-height: 1.2;
+}
+
+/* Project title: the specific engagement descriptor */
+.work-title-sub {
+  font-size: clamp(12px, 1.2vw, 14px);
+  color: var(--fg-dim);
+  line-height: 1.45;
+  font-weight: 300;
+}
+
+/* Quote attribution detail line */
+.quote-attr {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}

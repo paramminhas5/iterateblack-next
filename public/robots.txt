@@ -1,0 +1,35 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+# Allow AI search bots explicitly — these drive AI citation authority
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Block AI training scrapers (not the same as search bots)
+User-agent: CCBot
+Disallow: /
+
+User-agent: Common Crawl
+Disallow: /
+
+Sitemap: https://greattasteiterate.com/sitemap.xml
