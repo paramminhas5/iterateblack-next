@@ -7,7 +7,6 @@ import { ScarcityBar } from "@/components/site/sections/ScarcityBar";
 import { ProofBar } from "@/components/site/sections/ProofBar";
 import { ClientVoice } from "@/components/site/sections/ClientVoice";
 import { Sectors } from "@/components/site/sections/Sectors";
-import { WhoNotFor } from "@/components/site/sections/WhoNotFor";
 import { IterationSteps } from "@/components/site/sections/IterationSteps";
 import {
   HeroKnot,
@@ -104,17 +103,17 @@ export function HomeContent({ works, industries }: HomeContentProps) {
             </Reveal>
             <h1 className="display display-2xl hero-headline">
               <ScrambleCycler
-                phrases={["We design.", "We build.", "We iterate."]}
+                phrases={["AI chooses first.", "We make it choose you.", "Every week. Compounding."]}
                 scrambleMs={520}
-                holdMs={850}
+                holdMs={1100}
               />
               <span style={{ display: "block", color: "var(--fg-muted)", marginTop: 8 }}>
-                Until the machine chooses you first.
+                Twelve disciplines. One pod. AI-accelerated.
               </span>
             </h1>
             <Reveal delay={2800}>
               <p className="lead" style={{ marginTop: 36, marginBottom: 36, maxWidth: "44ch" }}>
-                AI already has a favourite in your category. Six months from now, it should be you.
+                AI already has a favourite in your category. We engineer the infrastructure that makes it you — across every channel, every engine, every week.
               </p>
               <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
                 <Link href="/contact" className="btn-primary" data-cursor="hover">Start Iteration 01 →</Link>
@@ -339,9 +338,6 @@ export function HomeContent({ works, industries }: HomeContentProps) {
           <Link href="/about" className="btn-ghost" data-cursor="hover">Read the full thesis →</Link>
         </Reveal>
       </section>
-
-      {/* ─── 13 WHO WE'RE NOT FOR ─── */}
-      <WhoNotFor />
 
       {/* ─── 14 CLOSING CTA ─── */}
       <section className="chapter chapter-tall container-edge cta-section">
