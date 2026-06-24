@@ -3,13 +3,13 @@ import { createServerClient } from "@/integrations/supabase/server";
 import { IndustriesIndex } from "./IndustriesIndex";
 
 export const metadata: Metadata = {
-  title: "Industries — Iterate | Six Sectors, One Operating Model",
+  title: "Industries — Iterate | B2B Infrastructure & B2C Demand Systems",
   description:
-    "Energy, travel, hospitality, aviation, healthcare, and real estate. One system per sector — a pricing engine, a citation graph, an itinerary copilot. Same pod, built on your stack.",
+    "Eight sectors across B2B and B2C. Energy, aviation, healthcare, SaaS, travel, hospitality, real estate, and D2C. One operating model — AI-accelerated infrastructure built for each vertical.",
   openGraph: {
-    title: "Industries — Iterate | Six Sectors, One Operating Model",
+    title: "Industries — Iterate | B2B Infrastructure & B2C Demand Systems",
     description:
-      "Energy, travel, hospitality, aviation, healthcare, and real estate. One system per sector — a pricing engine, a citation graph, an itinerary copilot. Same pod, built on your stack.",
+      "Eight sectors across B2B and B2C. One operating model — AI-accelerated infrastructure built for each vertical.",
     url: "https://greattasteiterate.com/industries",
   },
   alternates: { canonical: "https://greattasteiterate.com/industries" },

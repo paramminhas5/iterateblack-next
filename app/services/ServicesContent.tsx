@@ -11,71 +11,109 @@ import {
   ConvergenceNode,
 } from "@/components/site/three/LineArt";
 
+/* ────────────────────────────────────────────────────────────────────
+   SERVICE CATALOGUE — AI-Native + AI-Accelerated Traditional
+   ──────────────────────────────────────────────────────────────────── */
 
-const pillars = [
+const aiNative = [
   {
     num: "01",
-    title: "B2B Core — SEO, SEM & Content Infrastructure",
-    short: "Be the answer the agent picks — and the page the agent can parse.",
-    body:
-      "Technical SEO, programmatic content, schema, llms.txt, entity mapping, paid. One operating system across Google, Perplexity, ChatGPT, Gemini.",
-    builtNotBought:
-      "Our schema linter checks every page against the entity graph we've built for your category — generic SEO tools can't. Programmatic content is generated through a pipeline we own end-to-end: brief → draft → fact-check → schema → publish, with a human editor in the loop on every batch.",
-    deliverables: [
-      "Technical + on-page SEO",
-      "Programmatic content + CMS architecture",
-      "Schema, llms.txt, entity graph",
-      "Paid acquisition (Google, Meta, LinkedIn)",
-      "Attribution + dashboarding",
-    ],
-    proof: "Pickyourtrail · Noida International Airport",
+    title: "Generative Engine Optimization",
+    short: "Engineer the probability that AI systems cite you as the answer.",
+    body: "AI Citation Share tracking, answer-capsule content, editorial signal engineering across ChatGPT, Perplexity, Google AI Mode, and Gemini. We measure and move the metric that determines whether AI recommends you — or your competitor.",
+    aiEdge: "Weekly automated probes across all four engines using your category prompt set. Dashboard is yours. Data lives on your side. Every claim reproducible.",
+    proof: "Monkspaces — zero mentions to first recommendation in co-living category. Six months.",
     diagram: "citation",
   },
   {
     num: "02",
-    title: "Brand Validation & GEO",
-    short: "Quantify what was previously vibes.",
-    body:
-      "GEO, AI citation share, social mention, PR impact. Brand as a metric the CFO will defend.",
-    builtNotBought:
-      "We run weekly probes across ChatGPT, Perplexity, Gemini and Google AI Mode using your category prompt set — not a vendor's. The dashboard is yours, the data lives on your side, and every claim is reproducible.",
-    deliverables: [
-      "AI Citation Share tracking",
-      "Brand impact scoring (8/10 vs 5/10 model)",
-      "Social mention + sentiment system",
-      "PR & editorial signal engineering",
-      "Quarterly brand health reporting",
-    ],
-    proof: "BILLIONE · Rajasthan Tourism · Monkspaces",
-    diagram: "signal",
+    title: "AI Visibility Architecture",
+    short: "Make your brand machine-readable at 3am when no human is watching.",
+    body: "Schema markup, llms.txt deployment, knowledge-graph mapping, entity definition, structured data across your entire digital presence. The infrastructure layer that makes every other service compound faster.",
+    aiEdge: "Our schema linter audits 2,000 URLs in 90 seconds against the entity graph we build for your category. Same audit manually: three weeks, one analyst.",
+    proof: "Deployed across every client engagement since 2023. Foundation of all GEO work.",
+    diagram: "citation",
   },
   {
     num: "03",
     title: "Agentic Systems & SDK Development",
-    short: "Software that earns its retainer back in the first month.",
-    body:
-      "Custom agents, pricing engines, ChatGPT and Gemini SDKs — the same kind we run inside the pod. Your stack, your code, transferred on handover.",
-    builtNotBought:
-      "Agents we've shipped to production this year: dynamic EV pricing across 13,000 charge points (ChargeZone), an itinerary copilot that handles 70% of pre-sales (Pickyourtrail), an occupancy-routing agent for a 700-room portfolio (Monkspaces). None of them write blog posts.",
-    deliverables: [
-      "Custom AI agents (ops, sales, support)",
-      "Dynamic pricing + revenue engines",
-      "ChatGPT / Gemini SDK integrations",
-      "Internal copilots wired into your stack",
-      "Build → own → operate handover",
-    ],
-    proof: "ChargeZone · Coliwoo",
+    short: "Software that replaces manual workflows and earns its cost back in month one.",
+    body: "Custom AI agents, dynamic pricing engines, ChatGPT and Gemini SDK integrations, internal copilots. Your stack, your code, transferred on handover. These aren't experiments — they're production systems running today.",
+    aiEdge: "We build what we use. Every agent we ship to clients runs the same architecture as the tools inside our own pod.",
+    proof: "ChargeZone — dynamic pricing across 13,000 charge points, 6 weeks. Pickyourtrail — itinerary copilot, 70% of pre-sales.",
     diagram: "agent",
+  },
+  {
+    num: "04",
+    title: "AI Citation Authority Engineering",
+    short: "Build the signal layer that makes AI engines default to your brand.",
+    body: "Editorial placement engineering, citation-worthy content architecture, authority signal development, AI-optimized PR. Not traditional link building — structured authority that AI systems weight when choosing which brand to recommend.",
+    aiEdge: "We track citation velocity weekly. When a competitor gets cited and you don't, the model weights shift. We reverse-engineer what triggers those shifts and build accordingly.",
+    proof: "Rajasthan Tourism — AI citation authority across ChatGPT, Perplexity, Google AI Mode.",
+    diagram: "signal",
   },
 ];
 
-const entryPoints = [
-  ["Iteration 01 — Foundation", "Cloud ecosystem setup. Data security, AI tooling, reporting infrastructure, skills transfer. Three weeks. The foundation that makes everything after it compound."],
-  ["Iterations 02+ — Full System", "The full pod, permanently assigned. GEO, SEO, agentic systems, brand strategy, performance media — built as one integrated system, not a menu of services. Monthly retainer."],
+const aiAccelerated = [
+  {
+    num: "05",
+    title: "SEO & Content Infrastructure",
+    short: "Technical SEO and programmatic content — AI builds the first draft, humans ship the final one.",
+    body: "Technical audits, site architecture, programmatic content pipelines, CMS infrastructure, internal linking systems. AI generates at scale; our editors verify, fact-check, and ship.",
+    aiEdge: "AI-powered content pipelines produce 10x the output of manual teams. Every piece passes through fact-check, schema injection, and entity alignment before publish.",
+  },
+  {
+    num: "06",
+    title: "Performance Media & Paid Acquisition",
+    short: "Google, Meta, LinkedIn — AI-optimized bidding, creative, and attribution.",
+    body: "Paid search, social advertising, programmatic display, retargeting. AI handles bid optimization, creative testing at scale, and real-time budget reallocation across channels.",
+    aiEdge: "AI creative generation produces 50+ ad variants per brief. Automated bid scripts react to conversion signals in real-time, not next-day.",
+  },
+  {
+    num: "07",
+    title: "Brand Strategy & Identity",
+    short: "Positioning, naming, and visual systems — researched by AI, decided by humans.",
+    body: "Category positioning, brand architecture, naming, visual identity systems, brand guidelines. AI accelerates competitive research, naming exploration, and positioning validation — but the strategic decisions are human.",
+    aiEdge: "AI-powered category analysis maps competitor positioning across 200+ signals in hours, not weeks. Naming exploration generates and tests thousands of options before shortlisting.",
+  },
+  {
+    num: "08",
+    title: "Web & Product Design",
+    short: "Sites, apps, and landing systems — designed for conversion and AI crawlability.",
+    body: "Marketing sites, product interfaces, landing page systems, conversion infrastructure. Every build is structured for both human visitors and AI crawlers from day one.",
+    aiEdge: "AI-generated wireframes, copy variants, and component libraries accelerate design sprints. Every page ships with structured data baked in — not bolted on.",
+  },
+  {
+    num: "09",
+    title: "Content & Creative Production",
+    short: "Video, editorial, social — AI produces the volume, humans ensure the quality.",
+    body: "Video production, editorial content, social creative, campaign assets. AI handles the production volume that previously required ten-person teams. Human creative directors maintain the bar.",
+    aiEdge: "AI-assisted editing, scripting, and asset generation. A three-person creative team now outputs what ten did in 2022. Same quality. Ten times the volume.",
+  },
+  {
+    num: "10",
+    title: "Marketing Automation & CRM",
+    short: "Pipelines, nurture sequences, and lead scoring — with AI enrichment at every stage.",
+    body: "HubSpot, Salesforce, custom CRM pipelines. Nurture sequences, lead scoring, lifecycle automation. AI enriches every contact, scores intent in real-time, and triggers actions humans would miss.",
+    aiEdge: "AI-powered lead scoring that updates in real-time based on intent signals. Automated pipeline management that knows when to push and when to wait.",
+  },
+  {
+    num: "11",
+    title: "Analytics, Attribution & Dashboarding",
+    short: "Measurement infrastructure that tells you what's working — before you have to ask.",
+    body: "Custom dashboards, multi-touch attribution, real-time reporting infrastructure. Built for decision-makers who need clarity, not data analysts who need complexity.",
+    aiEdge: "AI-generated insights surface anomalies, opportunities, and risks automatically. Weekly reporting that writes itself — humans validate and annotate.",
+  },
+  {
+    num: "12",
+    title: "Social Media & Community",
+    short: "Organic social and community — AI handles the cadence, humans handle the voice.",
+    body: "Social strategy, content calendars, community management, reputation monitoring. AI maintains posting cadence and monitors sentiment; humans craft the voice and handle the conversations that matter.",
+    aiEdge: "AI sentiment analysis across all channels in real-time. Automated content scheduling with AI-optimized timing. Human intervention only where it adds value.",
+  },
 ];
 
 export function ServicesContent() {
-  // Active stage index: 0..2 for pillars, 3 for convergence
   const [active, setActive] = useState(0);
   const railRef = useRef<HTMLDivElement>(null);
   const stageRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -128,31 +166,44 @@ export function ServicesContent() {
     };
   }, []);
 
-  const ticks = [...pillars.map((p) => p.num), "↘"];
-  const activeProof = active < pillars.length ? pillars[active].proof : "Three disciplines · one outcome";
+  const ticks = aiNative.map((p) => p.num);
+  const diagrams = ["citation", "citation", "agent", "signal"];
 
   return (
     <>
+      {/* ─── HERO ─── */}
       <section className="chapter container-edge" style={{ paddingTop: 180 }}>
         <Reveal>
           <div style={{ display: "flex", gap: 18, marginBottom: 32 }}>
             <span className="tick" />
-            <span className="eyebrow eyebrow-muted">Services · the operating system</span>
+            <span className="eyebrow eyebrow-muted">Services · the full system</span>
           </div>
-          <h1 className="display display-xl" style={{ maxWidth: "18ch" }}>
-            <ScrambleHeadline as="span" text="Three disciplines." triggerOnView accent={false} duration={550} /><br />
-            <span style={{ color: "var(--fg-muted)" }}>One compounding system.</span>
+          <h1 className="display display-xl" style={{ maxWidth: "20ch" }}>
+            <ScrambleHeadline as="span" text="Every discipline." triggerOnView accent={false} duration={550} /><br />
+            <span style={{ color: "var(--fg-muted)" }}>AI-accelerated.</span>
           </h1>
-          <p className="lead" style={{ marginTop: 40, maxWidth: "48ch" }}>
-            One team. One number. No handoffs between the brand team, the tech team, and the media team — because it's the same team.
+          <p className="lead" style={{ marginTop: 40, maxWidth: "52ch" }}>
+            Everything a world-class agency does — plus everything they can't. Every service runs through AI infrastructure we built in-house. Same deliverables. Fraction of the time. No silos between teams because there's one team.
           </p>
         </Reveal>
       </section>
 
-      {/* ─── One rail. Sticky canvas cross-fades through 4 scenes as you scroll. ─── */}
-      <section className="chapter srv-rail-section">
+      {/* ─── AI-NATIVE SERVICES (scroll rail) ─── */}
+      <section className="chapter srv-rail-section hairline-top">
+        <div className="container-edge" style={{ marginBottom: 56 }}>
+          <Reveal>
+            <div style={{ display: "flex", gap: 18, marginBottom: 24 }}>
+              <span className="tick" />
+              <span className="eyebrow eyebrow-muted">Tier 1 · AI-native — what we pioneered</span>
+            </div>
+            <h2 className="display display-md" style={{ maxWidth: "22ch" }}>
+              Services no traditional agency offers.{" "}
+              <span style={{ color: "var(--fg-muted)" }}>Because they didn't build the infrastructure.</span>
+            </h2>
+          </Reveal>
+        </div>
+
         <div className="srv-rail" ref={railRef}>
-          {/* Left spine (desktop only) */}
           <aside className="srv-rail-spine" aria-hidden>
             <span className="srv-spine-line">
               <span className="srv-spine-fill" style={{ height: `${railP * 100}%` }} />
@@ -169,25 +220,20 @@ export function ServicesContent() {
             ))}
           </aside>
 
-          {/* Sticky right canvas — 4 stacked diagram layers, opacity-driven */}
           <aside className="srv-rail-canvas" aria-hidden>
-            <div className="srv-scene" data-on={active === 0 ? "true" : undefined}><CitationPulse /></div>
-            <div className="srv-scene" data-on={active === 1 ? "true" : undefined}><BrandSignalGraph /></div>
+            <div className="srv-scene" data-on={active === 0 || active === 1 ? "true" : undefined}><CitationPulse /></div>
+            <div className="srv-scene" data-on={active === 3 ? "true" : undefined}><BrandSignalGraph /></div>
             <div className="srv-scene" data-on={active === 2 ? "true" : undefined}><AgentLoop /></div>
-            <div className="srv-scene" data-on={active === 3 ? "true" : undefined}><ConvergenceNode /></div>
-            <div className="srv-scene-caption mono" key={activeProof}>{activeProof}</div>
           </aside>
 
-          {/* Copy column */}
           <div className="srv-rail-body">
-            {pillars.map((p, i) => (
+            {aiNative.map((p, i) => (
               <div
                 key={p.num}
                 className="srv-stage"
                 ref={(el) => { stageRefs.current[i] = el; }}
                 data-stage={i}
               >
-                {/* Mobile-only inline diagram, sits above copy */}
                 <div className="srv-stage-mobile-diagram" aria-hidden>
                   {p.diagram === "citation" && <CitationPulse />}
                   {p.diagram === "signal" && <BrandSignalGraph />}
@@ -196,77 +242,74 @@ export function ServicesContent() {
                 <Reveal>
                   <div className="srv-stage-head">
                     <span className="mono srv-stage-num">{p.num}</span>
-                    <h2 className="display display-md srv-stage-title">{p.title}</h2>
+                    <h3 className="display display-md srv-stage-title">{p.title}</h3>
                   </div>
                   <p className="lead srv-stage-short">{p.short}</p>
                   <p className="srv-stage-body">{p.body}</p>
                   <div className="srv-stage-bnb">
-                    <span className="mono srv-stage-bnb-label">Client proof</span>
-                    <p>{p.builtNotBought}</p>
+                    <span className="mono srv-stage-bnb-label">The AI edge</span>
+                    <p>{p.aiEdge}</p>
                   </div>
-                  <span className="mono srv-stage-del-label">Deliverables</span>
-                  <ul className="srv-stage-del">
-                    {p.deliverables.map((d) => (
-                      <li key={d}>{d}</li>
-                    ))}
-                  </ul>
+                  <div style={{ fontSize: 13, color: "var(--fg-muted)", borderTop: "1px solid var(--hairline)", paddingTop: 14, marginTop: 18 }}>
+                    <span className="mono" style={{ color: "var(--accent)", marginRight: 8, fontSize: 10 }}>PROOF</span>
+                    {p.proof}
+                  </div>
                 </Reveal>
               </div>
             ))}
-
-            {/* Convergence stage — the visual closer */}
-            <div
-              className="srv-stage srv-stage-converge"
-              ref={(el) => { stageRefs.current[3] = el; }}
-              data-stage={3}
-            >
-              <div className="srv-stage-mobile-diagram" aria-hidden>
-                <ConvergenceNode />
-              </div>
-              <Reveal>
-                <div className="srv-stage-head">
-                  <span className="mono srv-stage-num">↘</span>
-                  <h2 className="display display-md srv-stage-title">
-                    Three disciplines.<br />
-                    <span style={{ color: "var(--fg-muted)" }}>One pod. One outcome.</span>
-                  </h2>
-                </div>
-                <p className="lead srv-stage-short">
-                  Not three retainers. One operating system, deployed by one team, accountable to one number.
-                </p>
-              </Reveal>
-            </div>
           </div>
         </div>
       </section>
 
+      {/* ─── AI-ACCELERATED TRADITIONAL ─── */}
       <section className="chapter container-edge hairline-top" style={{ background: "var(--bg-deep)" }}>
         <Reveal>
-          <div style={{ display: "flex", gap: 18, marginBottom: 56 }}>
+          <div style={{ display: "flex", gap: 18, marginBottom: 24 }}>
             <span className="tick" />
-            <span className="eyebrow eyebrow-muted">Entry points</span>
+            <span className="eyebrow eyebrow-muted">Tier 2 · AI-accelerated — traditional, reimagined</span>
           </div>
+          <h2 className="display display-md" style={{ maxWidth: "24ch", marginBottom: 24 }}>
+            Every discipline you'd expect from a top agency.{" "}
+            <span style={{ color: "var(--fg-muted)" }}>Done in a fraction of the time.</span>
+          </h2>
+          <p className="lead" style={{ marginBottom: 64, maxWidth: "52ch" }}>
+            The same services — SEO, paid, brand, creative, web, analytics — but each one runs through AI tooling we built ourselves. The result: what takes a 30-person agency a quarter, we ship in weeks.
+          </p>
         </Reveal>
-        <div className="entry-points">
-          {entryPoints.map(([head, body], i) => (
-            <Reveal key={head} delay={i * 140} className="entry-card">
-              <div className="mono" style={{ color: "var(--accent)", marginBottom: 14 }}>{head}</div>
-              <p className="lead" style={{ color: "var(--fg)" }}>{body}</p>
+
+        <div className="services-grid">
+          {aiAccelerated.map((s, i) => (
+            <Reveal key={s.num} delay={i * 60} className="service-card">
+              <div className="mono" style={{ color: "var(--accent)", marginBottom: 14 }}>{s.num}</div>
+              <h3 className="service-card-title">{s.title}</h3>
+              <p className="service-card-short">{s.short}</p>
+              <p className="service-card-body">{s.body}</p>
+              <div className="service-card-edge">
+                <span className="mono" style={{ color: "var(--accent)", fontSize: 10, marginRight: 8 }}>AI EDGE</span>
+                {s.aiEdge}
+              </div>
             </Reveal>
           ))}
         </div>
       </section>
 
+      {/* ─── CONVERGENCE ─── */}
       <section className="chapter container-edge hairline-top">
         <Reveal>
-          <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
-            <span className="tick tick-lg" />
-            <div>
-              <h2 className="display display-lg" style={{ marginBottom: 32, maxWidth: "18ch" }}>
-                Tell us what winning looks like in your category.
-              </h2>
-              <Link href="/contact" className="btn-primary" data-cursor="hover">Start Iteration 01 →</Link>
-            </div>
+          <div style={{ display: "flex", gap: 18, marginBottom: 24 }}>
+            <span className="tick" />
+            <span className="eyebrow eyebrow-muted">One system</span>
+          </div>
+          <h2 className="display display-lg" style={{ maxWidth: "18ch", marginBottom: 32 }}>
+            Twelve disciplines.{" "}
+            <span style={{ color: "var(--fg-muted)" }}>One pod. One operating system.</span>
+          </h2>
+          <p className="lead" style={{ maxWidth: "52ch", marginBottom: 48 }}>
+            Not twelve retainers. Not twelve teams. One five-person pod with AI agents running every discipline as a single integrated system. The SEO informs the GEO. The brand informs the content. The agents automate what used to require headcount. Everything compounds because nothing is siloed.
+          </p>
+          <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+            <Link href="/how-we-work" className="btn-ghost" data-cursor="hover">See how we work →</Link>
+            <Link href="/contact" className="btn-primary" data-cursor="hover">Start Iteration 01 →</Link>
           </div>
         </Reveal>
       </section>
