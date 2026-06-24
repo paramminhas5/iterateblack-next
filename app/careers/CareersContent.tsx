@@ -11,7 +11,10 @@ const disciplines = [
   { label: "Engineering & AI", desc: "Full-stack, AI systems, infrastructure, SDK development" },
   { label: "Growth & Performance", desc: "Paid media, SEO, analytics, conversion optimization" },
   { label: "Content & Editorial", desc: "Writers, video, social content, editorial strategy" },
-  { label: "Vertical Specialists", desc: "Industry expertise: energy, travel, aviation, healthcare, D2C" },
+  { label: "Data & Analytics", desc: "Dashboarding, attribution, measurement infrastructure" },
+  { label: "Video & Motion", desc: "Production, editing, motion graphics, campaign assets" },
+  { label: "Product & UX Research", desc: "User research, product strategy, information architecture" },
+  { label: "Vertical Specialists", desc: "Industry expertise: energy, travel, aviation, healthcare, D2C, SaaS" },
 ];
 
 export function CareersContent() {

@@ -875,11 +875,10 @@ export function CitationPulse() {
       update: (t: number, p: number) => {
         group.rotation.z = t * 0.04;
         rings.forEach((r: any, i: number) => {
-          r.material.opacity = 0.12 + Math.max(0, Math.sin(t * 0.6 + i * 0.4)) * 0.18 + p * 0.1;
+          r.material.opacity = 0.12 + p * 0.15 + Math.max(0, Math.sin(t * 0.6 + i * 0.4)) * 0.08;
         });
-        // Continuous sweep: lines fill one-by-one in a clock pattern, then reset
-        const sweep = ((t * 0.12) % 1);
-        const lit = Math.floor(sweep * nodes.length);
+        // Lines fill based on scroll progress
+        const lit = Math.floor(p * nodes.length);
         nodes.forEach((n: any, i: number) => {
           const isLit = i <= lit;
           n.material.opacity = isLit ? 0.95 : 0.3;
@@ -898,7 +897,7 @@ export function CitationPulse() {
 }
 
 /* ───────────────────────── 18 · BrandSignalGraph ───────────────────────── */
-/** Rising authority ladder: horizontal bars grow as scroll progresses, signal strength building. */
+/** Rising signal line chart — line draws progressively with scroll, nodes at inflection points. */
 export function BrandSignalGraph() {
   const setup = useCallback((ctx: any) => {
     const { THREE, scene, size } = ctx;
@@ -908,57 +907,71 @@ export function BrandSignalGraph() {
     const group = new THREE.Group();
     scene.add(group);
 
-    // Vertical axis line
-    const axisGeo = new THREE.BufferGeometry().setFromPoints([
-      new THREE.Vector3(-2.8, -2.2, 0),
-      new THREE.Vector3(-2.8, 2.2, 0),
-    ]);
-    const axis = new THREE.Line(axisGeo, new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.3 }));
-    group.add(axis);
+    // Axis lines
+    const xAxis = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3, -1.8, 0), new THREE.Vector3(3, -1.8, 0)]),
+      new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.25 })
+    );
+    const yAxis = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3, -1.8, 0), new THREE.Vector3(-3, 2.2, 0)]),
+      new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.25 })
+    );
+    group.add(xAxis, yAxis);
 
-    // Horizontal signal bars — stacked vertically, grow left-to-right
-    const bars: any[] = [];
-    const barCount = 10;
-    for (let i = 0; i < barCount; i++) {
-      const y = -2.0 + (i / (barCount - 1)) * 4.0;
-      // Target width increases with height (authority growing)
-      const targetW = 1.0 + (i / (barCount - 1)) * 4.0;
-      const barGeo = new THREE.PlaneGeometry(0.01, 0.22);
-      const barMat = new THREE.MeshBasicMaterial({
-        color: i >= barCount - 3 ? ACCENT : LINE,
-        transparent: true,
-        opacity: 0.7,
-        side: THREE.DoubleSide,
-      });
-      const bar = new THREE.Mesh(barGeo, barMat);
-      bar.position.set(-2.8, y, 0);
-      group.add(bar);
-      bars.push({ bar, targetW, y, idx: i });
+    // Horizontal grid lines
+    for (let i = 1; i <= 4; i++) {
+      const y = -1.8 + i * 1.0;
+      const gridLine = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3, y, 0), new THREE.Vector3(3, y, 0)]),
+        new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.08 })
+      );
+      group.add(gridLine);
     }
 
-    // "Your brand" label node at the top
-    const brandNode = new THREE.LineSegments(
-      new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.18, 0)),
-      new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.9 })
-    );
-    brandNode.position.set(2.0, 2.0, 0);
-    group.add(brandNode);
+    // Signal curve points (rising with acceleration)
+    const N = 32;
+    const curvePoints: any[] = [];
+    for (let i = 0; i <= N; i++) {
+      const t = i / N;
+      const x = -3 + t * 6;
+      const y = -1.8 + Math.pow(t, 1.6) * 3.8 + Math.sin(t * 8) * 0.12;
+      curvePoints.push(new THREE.Vector3(x, y, 0));
+    }
+
+    const curveGeo = new THREE.BufferGeometry().setFromPoints(curvePoints);
+    const curveLine = new THREE.Line(curveGeo, new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.9 }));
+    group.add(curveLine);
+
+    // Inflection nodes at key points
+    const nodeIndices = [4, 10, 18, 25, 32];
+    const nodes: any[] = [];
+    nodeIndices.forEach((idx) => {
+      const pt = curvePoints[idx];
+      const node = new THREE.LineSegments(
+        new THREE.EdgesGeometry(new THREE.OctahedronGeometry(0.1, 0)),
+        new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0 })
+      );
+      node.position.copy(pt);
+      group.add(node);
+      nodes.push({ node, idx });
+    });
 
     return {
       camera,
-      update: (t: number, p: number) => {
-        // Bars grow based on combination of time + scroll
-        const progress = Math.min(1, t * 0.06 + p * 0.6);
-        bars.forEach(({ bar, targetW, idx }) => {
-          const barProgress = Math.min(1, progress * (1 + idx * 0.1));
-          const w = 0.1 + targetW * barProgress;
-          bar.scale.x = w / 0.01;
-          bar.position.x = -2.8 + w / 2;
-          bar.material.opacity = 0.4 + barProgress * 0.5;
+      update: (_t: number, p: number) => {
+        // Draw curve progressively based on scroll
+        const drawRange = Math.floor(p * (N + 1));
+        curveGeo.setDrawRange(0, Math.max(2, drawRange));
+
+        // Show nodes as the curve reaches them
+        nodes.forEach(({ node, idx }) => {
+          const visible = drawRange >= idx;
+          node.material.opacity = visible ? 0.9 : 0;
+          if (visible) node.rotation.y = _t * 0.5;
         });
-        brandNode.rotation.y = t * 0.5;
-        brandNode.material.opacity = 0.5 + progress * 0.5;
-        brandNode.scale.setScalar(0.6 + progress * 0.5);
+
+        // Subtle rotation
+        group.rotation.z = Math.sin(_t * 0.05) * 0.02;
       },
     };
   }, []);
@@ -1451,27 +1464,25 @@ export function ConvergenceNode() {
         group.rotation.z = t * 0.025;
         core.rotation.y = t * 0.3;
         core.rotation.x = t * 0.15;
-        core.scale.setScalar(1 + Math.sin(t * 0.8) * 0.05);
+        core.scale.setScalar(0.7 + _p * 0.4 + Math.sin(t * 0.8) * 0.03);
 
-        // Citation paths pulse in sequence — time + scroll driven
-        const scrollBoost = _p * 0.4;
-        paths.forEach(({ line, phase }) => {
-          const wave = Math.sin(t * 0.7 + scrollBoost * 3 - phase);
-          line.material.opacity = Math.max(0, wave) * 0.7 + _p * 0.15;
+        // Citation paths fill based on scroll
+        const litPaths = Math.floor(_p * paths.length);
+        paths.forEach(({ line }, i) => {
+          line.material.opacity = i <= litPaths ? 0.6 + Math.sin(t * 1.2 + i * 0.3) * 0.1 : 0;
         });
 
-        // Source nodes pulse when their path is active
+        // Source nodes light up with scroll
         sources.forEach(({ node }, i) => {
-          const wave = Math.sin(t * 0.7 + scrollBoost * 3 - i * 0.45);
-          node.material.opacity = 0.3 + Math.max(0, wave) * 0.6;
-          node.material.color.setHex(wave > 0.3 ? ACCENT : LINE);
+          const isLit = i <= litPaths;
+          node.material.opacity = isLit ? 0.85 : 0.25;
+          node.material.color.setHex(isLit ? ACCENT : LINE);
         });
 
-        // Competitors fade with time cycle + scroll
-        const dominance = Math.min(1, (Math.sin(t * 0.15) + 1) / 2 + _p * 0.3);
+        // Competitors fade with scroll
         competitors.forEach(({ node, phase }) => {
-          node.material.opacity = 0.4 - dominance * 0.3;
-          const s = 1 - dominance * 0.3 + Math.sin(t + phase) * 0.05;
+          node.material.opacity = Math.max(0.08, 0.4 - _p * 0.35);
+          const s = 1 - _p * 0.3 + Math.sin(t + phase) * 0.03;
           node.scale.setScalar(s);
         });
       },

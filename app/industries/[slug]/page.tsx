@@ -51,12 +51,50 @@ export default async function Page({
   const { slug } = await params;
   const supabase = createServerClient();
 
-  const { data: industry } = await supabase
+  let industry: any = null;
+
+  // Check Supabase first
+  const { data: dbIndustry } = await supabase
     .from("industries")
     .select("*")
     .eq("slug", slug)
     .eq("published", true)
     .maybeSingle();
+
+  industry = dbIndustry;
+
+  // Static fallback for industries not yet in Supabase
+  if (!industry && slug === "tourism") {
+    industry = {
+      slug: "tourism",
+      name: "Tourism & Destination",
+      tagline: "AI visibility that puts your destination on the map",
+      summary: "Tourism boards and destination brands need AI systems to recommend them when travellers ask 'where should I go?' — we build the citation authority and brand infrastructure that makes AI engines choose your destination first.",
+      diagram_key: "RouteWeave",
+      highlights: [
+        { label: "AI engines monitored weekly", value: "4" },
+        { label: "Citation authority programme duration", value: "6 months" },
+        { label: "State-level brand programme", value: "Rajasthan" },
+      ],
+      needs: [
+        "AI citation authority — be the destination AI recommends",
+        "Brand infrastructure that scales across channels and languages",
+        "Experience platform design for modern travellers",
+        "Performance media driving qualified visitor intent",
+        "Content infrastructure — editorial, video, social at scale",
+      ],
+      offerings: [
+        "GEO programme: AI citation share across ChatGPT, Perplexity, Gemini, Google AI Mode",
+        "Destination brand architecture and visual identity systems",
+        "AI visibility infrastructure — schema, entity graphs, llms.txt",
+        "Content production pipeline — editorial, video, social",
+        "Performance media — intent-driven paid acquisition",
+        "Measurement infrastructure — attribution, dashboarding, reporting",
+      ],
+      why_us: "We built the AI visibility programme for Rajasthan Tourism — a state-level authority brand that now appears across AI-generated travel recommendations.\n\nThe same operating model that works for a state tourism board works for a city, a resort group, or a destination experience company. The infrastructure is the same. The category prompts change.\n\nTravel is one of the highest-intent categories in AI search. When someone asks an AI 'where should I go for X,' the destination that's structured for that query wins. We build that structure.",
+      related_case_slugs: ["rajasthan-tourism"],
+    };
+  }
 
   const { data: allIndustries } = await supabase
     .from("industries")
