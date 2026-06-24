@@ -877,19 +877,18 @@ export function CitationPulse() {
         rings.forEach((r: any, i: number) => {
           r.material.opacity = 0.12 + Math.max(0, Math.sin(t * 0.6 + i * 0.4)) * 0.18 + p * 0.1;
         });
-        // citations light up continuously with time + scroll boost
-        const progress = Math.min(1, (Math.sin(t * 0.25) + 1) / 2 * 0.4 + p * 0.7);
-        const lit = Math.floor(progress * nodes.length);
+        // Continuous sweep: lines fill one-by-one in a clock pattern, then reset
+        const sweep = ((t * 0.12) % 1);
+        const lit = Math.floor(sweep * nodes.length);
         nodes.forEach((n: any, i: number) => {
           const isLit = i <= lit;
-          const pulse = Math.sin(t * 1.2 + i * 0.5) * 0.2;
-          n.material.opacity = isLit ? 0.8 + pulse : 0.35;
+          n.material.opacity = isLit ? 0.95 : 0.3;
           n.material.color.setHex(isLit ? ACCENT : LINE);
+          if (isLit) n.rotation.y = t * 0.8;
         });
         lines.forEach((l: any, i: number) => {
           const isLit = i <= lit;
-          const pulse = Math.sin(t * 1.5 + i * 0.3) * 0.15;
-          l.material.opacity = isLit ? 0.45 + pulse : 0;
+          l.material.opacity = isLit ? 0.6 : 0;
         });
       },
     };
@@ -1407,7 +1406,7 @@ export function ServicesLoop() {
 }
 
 /* ───────────────────── ConvergenceNode · 3 motifs collapse into one ───────────────────── */
-/** Citation arcs, signal bars, and agent loop converge into a single accent node. */
+/** Citation authority network: paths converge to dominant brand node, competitors fade. */
 export function ConvergenceNode() {
   const setup = useCallback((ctx: any) => {
     const { THREE, scene, size } = ctx;
@@ -1417,95 +1416,86 @@ export function ConvergenceNode() {
     const group = new THREE.Group();
     scene.add(group);
 
-    // central accent node
+    // Central brand node — dominant
     const core = new THREE.LineSegments(
-      new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.28, 0)),
-      new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 1 })
+      new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.35, 1)),
+      new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.95 })
     );
     group.add(core);
 
-    // motif 1: citation dots (left arc) — converge toward center
-    const citationDots: any[] = [];
-    const citationStart: any[] = [];
-    for (let i = 0; i < 9; i++) {
-      const a = Math.PI + (i / 8) * Math.PI - Math.PI / 2;
-      const r = 2.4;
-      const pos = new THREE.Vector3(Math.cos(a) * r - 0.6, Math.sin(a) * r, 0);
-      const dot = new THREE.LineSegments(
-        new THREE.EdgesGeometry(new THREE.TetrahedronGeometry(0.09, 0)),
-        new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.7 })
-      );
-      dot.position.copy(pos);
-      group.add(dot);
-      citationDots.push(dot);
-      citationStart.push(pos.clone());
-    }
-
-    // motif 2: signal bars (top) — collapse downward
-    const bars: any[] = [];
-    const barStart: any[] = [];
-    for (let i = 0; i < 7; i++) {
-      const x = -1.5 + i * 0.5;
-      const h = 0.25 + Math.random() * 0.7;
-      const geo = new THREE.PlaneGeometry(0.06, h);
-      const mat = new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.6 });
-      const bar = new THREE.LineSegments(new THREE.EdgesGeometry(geo), mat);
-      bar.position.set(x, 2.4 + h / 2, 0);
-      group.add(bar);
-      bars.push(bar);
-      barStart.push(bar.position.clone());
-    }
-
-    // motif 3: agent loop nodes (right) — collapse inward
-    const loopNodes: any[] = [];
-    const loopStart: any[] = [];
-    for (let i = 0; i < 4; i++) {
-      const a = (i / 4) * Math.PI * 2 - Math.PI / 2;
-      const r = 1.4;
-      const pos = new THREE.Vector3(Math.cos(a) * r + 1.8, Math.sin(a) * r, 0);
+    // Source nodes in an outer ring (citation sources)
+    const sources: any[] = [];
+    const sourceCount = 14;
+    for (let i = 0; i < sourceCount; i++) {
+      const a = (i / sourceCount) * Math.PI * 2;
+      const r = 2.6 + Math.sin(i * 1.7) * 0.4;
+      const pos = new THREE.Vector3(Math.cos(a) * r, Math.sin(a) * r, 0);
       const node = new THREE.LineSegments(
-        new THREE.EdgesGeometry(new THREE.BoxGeometry(0.3, 0.3, 0.3)),
-        new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.65 })
+        new THREE.EdgesGeometry(new THREE.OctahedronGeometry(0.08, 0)),
+        new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.5 })
       );
       node.position.copy(pos);
       group.add(node);
-      loopNodes.push(node);
-      loopStart.push(pos.clone());
+      sources.push({ node, pos, angle: a });
     }
 
-    // converging beams (drawn at high p)
-    const beamMat = new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0 });
-    const allOrigins = [...citationStart, ...barStart, ...loopStart];
-    const beams: any[] = allOrigins.map((o) => {
-      const g = new THREE.BufferGeometry().setFromPoints([o.clone(), new THREE.Vector3()]);
-      const ln = new THREE.Line(g, beamMat.clone());
-      group.add(ln);
-      return ln;
+    // Citation paths: curved lines from sources to center
+    const paths: any[] = [];
+    sources.forEach(({ pos }, i) => {
+      const mid = pos.clone().multiplyScalar(0.5);
+      mid.x += (Math.random() - 0.5) * 0.8;
+      mid.y += (Math.random() - 0.5) * 0.8;
+      const curve = new THREE.QuadraticBezierCurve3(pos, mid, new THREE.Vector3(0, 0, 0));
+      const pts = curve.getPoints(24);
+      const geo = new THREE.BufferGeometry().setFromPoints(pts);
+      const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0 }));
+      group.add(line);
+      paths.push({ line, phase: i * 0.45 });
     });
+
+    // Competitor nodes (smaller, off to sides)
+    const competitors: any[] = [];
+    for (let i = 0; i < 4; i++) {
+      const a = (i / 4) * Math.PI * 2 + 0.4;
+      const r = 1.4;
+      const pos = new THREE.Vector3(Math.cos(a) * r, Math.sin(a) * r, 0);
+      const node = new THREE.LineSegments(
+        new THREE.EdgesGeometry(new THREE.TetrahedronGeometry(0.14, 0)),
+        new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.4 })
+      );
+      node.position.copy(pos);
+      group.add(node);
+      competitors.push({ node, phase: i * 1.2 });
+    }
 
     return {
       camera,
-      update: (t: number, p: number) => {
-        const ease = p * p * (3 - 2 * p);
-        // citation dots → center
-        citationDots.forEach((d: any, i: number) => {
-          d.position.lerpVectors(citationStart[i], new THREE.Vector3(0, 0, 0), ease);
-          d.material.color.setHex(p > 0.7 ? ACCENT : LINE);
+      update: (t: number, _p: number) => {
+        group.rotation.z = t * 0.025;
+        core.rotation.y = t * 0.3;
+        core.rotation.x = t * 0.15;
+        core.scale.setScalar(1 + Math.sin(t * 0.8) * 0.05);
+
+        // Citation paths pulse in sequence — always animating
+        paths.forEach(({ line, phase }) => {
+          const wave = Math.sin(t * 0.7 - phase);
+          line.material.opacity = Math.max(0, wave) * 0.7;
         });
-        bars.forEach((b: any, i: number) => {
-          b.position.lerpVectors(barStart[i], new THREE.Vector3(0, 0, 0), ease);
-          b.material.color.setHex(p > 0.7 ? ACCENT : LINE);
+
+        // Source nodes pulse when their path is active
+        sources.forEach(({ node }, i) => {
+          const wave = Math.sin(t * 0.7 - i * 0.45);
+          node.material.opacity = 0.3 + Math.max(0, wave) * 0.6;
+          node.material.color.setHex(wave > 0.3 ? ACCENT : LINE);
         });
-        loopNodes.forEach((n: any, i: number) => {
-          n.position.lerpVectors(loopStart[i], new THREE.Vector3(0, 0, 0), ease);
-          n.rotation.x = t * 0.4;
-          n.rotation.y = t * 0.5;
-          n.material.color.setHex(p > 0.7 ? ACCENT : LINE);
+
+        // Competitors fade and shrink over time cycle
+        const dominance = (Math.sin(t * 0.15) + 1) / 2;
+        competitors.forEach(({ node, phase }) => {
+          node.material.opacity = 0.4 - dominance * 0.3;
+          const s = 1 - dominance * 0.3 + Math.sin(t + phase) * 0.05;
+          node.scale.setScalar(s);
         });
-        beams.forEach((bm: any) => { bm.material.opacity = Math.max(0, ease - 0.3) * 0.6; });
-        core.scale.setScalar(0.6 + ease * 0.8 + Math.sin(t * 1.2) * 0.04);
-        (core.material as any).opacity = 0.6 + ease * 0.4;
-        group.rotation.z = Math.sin(t * 0.1) * 0.04;
       },
     };
   }, []);

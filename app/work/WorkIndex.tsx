@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Reveal } from "@/components/site/Reveal";
-import { ScrambleHeadline } from "@/components/site/ScrambleHeadline";
+import { ScrambleCycler } from "@/components/site/ScrambleCycler";
 import { ClientMark } from "@/components/site/ClientMark";
 
 type Work = {
@@ -27,10 +27,12 @@ export function WorkIndexContent({ works }: WorkIndexProps) {
             <span className="tick" />
             <span className="eyebrow eyebrow-muted">Work · 2014 — present</span>
           </div>
-          <h1 className="display display-xl" style={{ maxWidth: "16ch" }}>
-            <ScrambleHeadline as="span" text="Seven engagements." triggerOnView accent={false} duration={550} />
-            <br />
-            <span style={{ color: "var(--fg-muted)" }}>Zero campaigns.</span>
+          <h1 className="display display-2xl hero-headline">
+            <ScrambleCycler
+              phrases={["Seven engagements.", "Zero campaigns.", "Infrastructure that compounds."]}
+              scrambleMs={520}
+              holdMs={900}
+            />
           </h1>
           <p className="lead" style={{ marginTop: 32, maxWidth: "52ch" }}>
             Every engagement below is a system that still runs. Not a campaign that ended. Not an awareness exercise. Infrastructure — built to compound long after the engagement closes.

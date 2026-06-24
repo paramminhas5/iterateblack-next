@@ -72,7 +72,27 @@ export function ScrambleCycler({
         timeoutRef.current = window.setTimeout(() => { i += 1; step(); }, holdMs);
       });
     };
-    step();
+
+    // Wait for loader to finish before starting animation
+    const loaderShown = !sessionStorage.getItem("gti-loader-shown");
+    if (loaderShown) {
+      const onLoaderDone = () => { step(); };
+      window.addEventListener("loader:done", onLoaderDone, { once: true });
+      // Fallback: if event never fires (already shown), start after 100ms
+      const fallback = window.setTimeout(() => {
+        window.removeEventListener("loader:done", onLoaderDone);
+        step();
+      }, 3000);
+      return () => {
+        cancelled = true;
+        window.removeEventListener("loader:done", onLoaderDone);
+        clearTimeout(fallback);
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      };
+    } else {
+      step();
+    }
 
     return () => {
       cancelled = true;

@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { AboutContent } from "./AboutContent";
 
 export const metadata: Metadata = {
-  title: "About — Iterate | The Team Behind AI-Native Marketing Infrastructure",
+  title: "About — Iterate | Three Leaders, 80+ Specialists, One Network",
   description:
-    "Founded in 2014 by Param Minhas. Four operators building AI marketing infrastructure for founders who already know what good looks like. No holding company. No account layers. Just the work.",
+    "Founded in 2014 by Param Minhas. Three leaders across B2B, B2C, and AI engineering — plus a network of 80+ specialists in design, growth, performance, and engineering. No holding company. No account layers.",
   openGraph: {
-    title: "About — Iterate | The Team Behind AI-Native Marketing Infrastructure",
+    title: "About — Iterate | Three Leaders, 80+ Specialists, One Network",
     description:
-      "Founded in 2014 by Param Minhas. Four operators building AI marketing infrastructure for founders who already know what good looks like.",
+      "Founded in 2014 by Param Minhas. Three leaders plus 80+ specialists building AI marketing infrastructure.",
     url: "https://greattasteiterate.com/about",
   },
   alternates: { canonical: "https://greattasteiterate.com/about" },
@@ -20,39 +20,34 @@ const teamSchema = [
     "@type": "Person",
     name: "Param Minhas",
     url: "https://paramminhas.com",
-    jobTitle: "Founder & Director",
+    jobTitle: "Founder — AI, Brand, Growth, Product",
     worksFor: { "@id": "https://greattasteiterate.com/#organization" },
-    knowsAbout: [
-      "AI Marketing Infrastructure",
-      "Generative Engine Optimization",
-      "Brand Strategy",
-      "Agentic Systems",
-    ],
+    knowsAbout: ["AI Marketing Infrastructure", "Brand Strategy", "Growth Systems", "Product Development"],
     sameAs: ["https://paramminhas.com"],
   },
   {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Arjun Mehta",
-    jobTitle: "Head of Strategy",
+    jobTitle: "Head of B2B",
     worksFor: { "@id": "https://greattasteiterate.com/#organization" },
-    knowsAbout: ["Brand Positioning", "Category Design", "Go-to-Market Strategy"],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Rohan Kapoor",
-    jobTitle: "Head of Engineering",
-    worksFor: { "@id": "https://greattasteiterate.com/#organization" },
-    knowsAbout: ["AI Systems", "Agentic Infrastructure", "SDK Development", "Dynamic Pricing"],
+    knowsAbout: ["Enterprise Infrastructure", "Operational AI", "B2B Go-to-Market", "Pricing Systems"],
   },
   {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Priya Sharma",
-    jobTitle: "Head of GEO & AI Visibility",
+    jobTitle: "Head of B2C",
     worksFor: { "@id": "https://greattasteiterate.com/#organization" },
-    knowsAbout: ["Generative Engine Optimization", "AI Citation Engineering", "SEO"],
+    knowsAbout: ["Consumer Brand", "Demand Systems", "AI Visibility", "Conversion Infrastructure"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Rohan Kapoor",
+    jobTitle: "Head of AI & Engineering",
+    worksFor: { "@id": "https://greattasteiterate.com/#organization" },
+    knowsAbout: ["AI Systems Architecture", "Agentic Infrastructure", "SDK Development", "Dynamic Pricing"],
   },
 ];
 

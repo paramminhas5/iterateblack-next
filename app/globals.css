@@ -1586,9 +1586,6 @@ button { font-family: inherit; }
 }
 .work-row-compact .work-title {
   font-size: clamp(18px, 2.4vw, 32px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1607,4 +1604,45 @@ button { font-family: inherit; }
   align-items: center;
   gap: 16px;
   margin-bottom: 12px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   NETWORK GRID — 80+ specialists section
+   ═══════════════════════════════════════════════════════════════════ */
+
+.network-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+}
+.network-card {
+  padding: 32px 24px;
+  border: 1px solid var(--hairline);
+  background: rgba(11, 15, 21, 0.55);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.network-card-count {
+  font-family: var(--font-sans);
+  font-weight: 200;
+  font-size: clamp(32px, 4vw, 48px);
+  color: var(--accent);
+  line-height: 1;
+}
+.network-card-label {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+@media (max-width: 900px) {
+  .network-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+}
+@media (max-width: 600px) {
+  .network-grid { grid-template-columns: repeat(2, 1fr); }
+  .network-card { padding: 24px 16px; }
 }

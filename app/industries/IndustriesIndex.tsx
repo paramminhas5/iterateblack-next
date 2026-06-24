@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Reveal } from "@/components/site/Reveal";
+import { ScrambleCycler } from "@/components/site/ScrambleCycler";
 import { ScrambleHeadline } from "@/components/site/ScrambleHeadline";
 import { ContextualDiagram } from "@/components/site/three/ContextualDiagram";
 
@@ -86,9 +87,12 @@ export function IndustriesIndex({ industries }: IndustriesIndexProps) {
             <span className="tick" />
             <span className="eyebrow eyebrow-muted">Industries · where we operate</span>
           </div>
-          <h1 className="display display-xl" style={{ maxWidth: "18ch" }}>
-            <ScrambleHeadline as="span" text="Two markets." triggerOnView accent={false} duration={550} />{" "}
-            <span style={{ color: "var(--fg-muted)" }}>One operating system.</span>
+          <h1 className="display display-2xl hero-headline">
+            <ScrambleCycler
+              phrases={["Two markets.", "One model.", "AI-accelerated."]}
+              scrambleMs={520}
+              holdMs={900}
+            />
           </h1>
           <p className="lead" style={{ maxWidth: "52ch", marginTop: 28 }}>
             We build infrastructure for B2B companies that need operational AI and demand systems for B2C brands that need to own their category. Same pod. Same disciplines. Different problems worth solving.
