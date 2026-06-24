@@ -123,10 +123,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-IN">
       <head>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <meta name="theme-color" content="#06080c" />
         <meta name="color-scheme" content="dark" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="manifest" href="/site.webmanifest" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}

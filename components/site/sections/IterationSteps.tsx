@@ -6,7 +6,7 @@ const steps = [
   {
     num: "01",
     label: "Iteration 01",
-    timeframe: "3 weeks · ₹50k–₹1L",
+    timeframe: "3 weeks · one-time",
     title: "Cloud ecosystem setup",
     points: [
       "Data security + AI tooling baseline",
@@ -18,7 +18,7 @@ const steps = [
   {
     num: "02",
     label: "Iteration 02",
-    timeframe: "Month 2 onward · ₹3–5L/mo",
+    timeframe: "Month 2 onward · monthly retainer",
     title: "Pod permanently assigned",
     points: [
       "GEO + SEO infrastructure shipped",

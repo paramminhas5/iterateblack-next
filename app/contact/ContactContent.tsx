@@ -11,7 +11,7 @@ const schema = z.object({
   email: z.string().trim().email("Invalid email").max(254),
   company: z.string().trim().max(160).optional().or(z.literal("")),
   budget: z.string().trim().max(80).optional().or(z.literal("")),
-  message: z.string().trim().min(10, "A little more detail, please").max(4000),
+  message: z.string().trim().min(10, "Please provide more context.").max(4000),
 });
 
 export function ContactContent() {
@@ -41,7 +41,7 @@ export function ContactContent() {
       message: parsed.data.message,
       source: "website",
     });
-    if (error) { setState("err"); setServerErr("Something didn't go through. Try again or email hello@iterate.studio."); return; }
+    if (error) { setState("err"); setServerErr("Something didn't go through. Try again or email hello@greattasteiterate.com."); return; }
     setState("ok");
   }
 
@@ -52,7 +52,7 @@ export function ContactContent() {
         <Reveal className="contact-head">
           <div style={{ display: "flex", gap: 18, marginBottom: 32 }}>
             <span className="tick" />
-            <span className="eyebrow eyebrow-muted">Book the brief · 30 min · free</span>
+            <span className="eyebrow eyebrow-muted">Start a conversation · 30 min</span>
           </div>
           <h1 className="display display-xl" style={{ maxWidth: "14ch" }}>
             Tell us where you want<br />
@@ -64,13 +64,13 @@ export function ContactContent() {
           <Reveal className="contact-meta">
             <span className="mono">Reach</span>
             <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 14 }}>
-              <a href="mailto:hello@iterate.studio" data-cursor="hover" style={{ fontSize: 18, fontWeight: 300 }}>hello@iterate.studio</a>
+              <a href="mailto:hello@greattasteiterate.com" data-cursor="hover" style={{ fontSize: 18, fontWeight: 300 }}>hello@greattasteiterate.com</a>
               <span style={{ color: "var(--fg-muted)", fontSize: 14 }}>We reply within two business days.<br />Iterations begin within three weeks.</span>
             </div>
             <div style={{ marginTop: 56 }}>
               <span className="mono">Good fits</span>
               <ul style={{ marginTop: 16, paddingLeft: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
-                {["Founders and operators with a clear commercial goal", "B2B + D2C with quantifiable goals", "AI infrastructure & agentic systems", "Briefs where speed compounds"].map((x) => (
+                {["Series A+ founders with a clear commercial outcome to move", "B2B or D2C companies doing $1M+ annual revenue", "Teams that need AI infrastructure shipped in weeks, not quarters", "Briefs where compounding speed matters more than coverage"].map((x) => (
                   <li key={x} style={{ fontSize: 14, color: "var(--fg-muted)" }}>— {x}</li>
                 ))}
               </ul>
@@ -93,10 +93,10 @@ export function ContactContent() {
                   <label>Budget range</label>
                   <select name="budget" defaultValue="" style={{ background: "transparent", color: "var(--fg)" }}>
                     <option value="" style={{ background: "#0b0f15" }}>Not sure yet</option>
-                    <option value="iter01" style={{ background: "#0b0f15" }}>Iteration 01 (₹50k–1L)</option>
-                    <option value="3-5L" style={{ background: "#0b0f15" }}>₹3–5L / month</option>
-                    <option value="5-10L" style={{ background: "#0b0f15" }}>₹5–10L / month</option>
-                    <option value="10L+" style={{ background: "#0b0f15" }}>₹10L+ / month</option>
+                    <option value="iter01" style={{ background: "#0b0f15" }}>Iteration 01 (foundation engagement)</option>
+                    <option value="4-6k" style={{ background: "#0b0f15" }}>$4–6K / month</option>
+                    <option value="6-12k" style={{ background: "#0b0f15" }}>$6–12K / month</option>
+                    <option value="12k+" style={{ background: "#0b0f15" }}>$12K+ / month</option>
                   </select>
                 </div>
                 <div className="field">
@@ -106,7 +106,7 @@ export function ContactContent() {
                 </div>
                 <div style={{ marginTop: 32, display: "flex", alignItems: "center", gap: 24 }}>
                   <button type="submit" className="btn-primary" disabled={state === "submitting"} data-cursor="hover">
-                    {state === "submitting" ? "Sending…" : "Book the brief →"}
+                    {state === "submitting" ? "Sending…" : "Submit →"}
                   </button>
                   {serverErr && <span style={{ color: "var(--accent)", fontSize: 12 }}>{serverErr}</span>}
                 </div>

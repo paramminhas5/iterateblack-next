@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Reveal } from "@/components/site/Reveal";
 import { ScrambleHeadline } from "@/components/site/ScrambleHeadline";
 import { ScarcityBar } from "@/components/site/sections/ScarcityBar";
@@ -42,45 +40,54 @@ const pillars = [
     num: "01",
     title: "AI Visibility Architecture",
     body: "Schema, structured data, llms.txt, knowledge-graph mapping. When an AI crawls you at 3am, it understands you well enough to recommend you.",
-    proof: "Our schema linter audits 2,000 URLs in 90 seconds against the entity graph we've built for your category. Same audit at a legacy agency: 3 weeks, one analyst.",
+    proof: "Our schema linter audits 2,000 URLs in 90 seconds against the entity graph we build for your category — a task that takes a traditional agency three weeks and one analyst.",
   },
   {
     num: "02",
     title: "Generative Engine Optimization",
     body: "Answer-capsule content, citation authority, editorial signals across ChatGPT, Perplexity, Gemini, Google AI Mode. A system, not a campaign.",
-    proof: "We probe all four engines weekly with your category prompt set — unattended. A research vendor charges ₹2L/month to run a slice of this quarterly.",
+    proof: "We probe all four engines weekly with your category prompt set — unattended. One client went from zero AI mentions to first recommendation in their category within six months.",
   },
   {
     num: "03",
     title: "Agentic Systems & SDK Development",
     body: "Custom agents, pricing engines, ChatGPT and Gemini SDKs. Your stack, your code, transferred on handover.",
-    proof: "ChargeZone's pricing engine shipped in 6 weeks. Comparable vendor quote: 6 months, ₹40 lakh. Also in production: Pickyourtrail's itinerary copilot. Monkspaces' occupancy router.",
+    proof: "Production agents running today: dynamic pricing across 13K charge points, an itinerary copilot handling 70% of pre-sales, an occupancy router for a 700-room portfolio.",
   },
 ];
 
 const comparison: [string, string, string][] = [
-  ["Monthly cost", "₹10–20 lakh", "₹3–5 lakh"],
+  ["Monthly investment", "$12K–$25K equivalent", "$4K–$6K"],
   ["Time to first result", "2–3 months", "3 weeks"],
-  ["Team size", "20–30 people", "5-person pod + AI agents"],
-  ["AI leverage", "Ad-hoc tools", "Custom agents inside the pod"],
-  ["Deliverable", "Campaign", "Infrastructure"],
-  ["What's measured", "Impressions, clicks", "AI Citation Share, revenue"],
+  ["Team size", "20–30 people across silos", "5-person pod + AI agents"],
+  ["AI leverage", "Ad-hoc tools, no custom systems", "Custom agents built into the workflow"],
+  ["Deliverable", "Campaign that decays", "Infrastructure that compounds"],
+  ["What gets measured", "Impressions, clicks, reach", "AI Citation Share, revenue impact"],
 ];
 
-export function HomeContent() {
-  const { data: works } = useQuery({
-    queryKey: ["case_studies_home"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("case_studies")
-        .select("slug,title,client,year,tags")
-        .eq("published", true)
-        .order("sort_order", { ascending: true })
-        .limit(4);
-      if (error) throw error;
-      return data ?? [];
-    },
-  });
+type Work = {
+  slug: string;
+  title: string;
+  client: string;
+  year: string;
+  tags: string[];
+};
+
+type Industry = {
+  slug: string;
+  name: string;
+  tagline: string;
+  summary: string;
+  diagram_key: string;
+  sort_order: number;
+};
+
+interface HomeContentProps {
+  works: Work[];
+  industries: Industry[];
+}
+
+export function HomeContent({ works, industries }: HomeContentProps) {
 
   return (
     <>
@@ -167,11 +174,11 @@ export function HomeContent() {
               <ScrambleHeadline as="span" text="COST" triggerOnView accent={false} duration={420} />
             </div>
             <div className="display display-md" style={{ marginBottom: 18 }}>
-              <ScrambleNumber value="₹3–5L" />{" "}
-              <span style={{ color: "var(--fg-muted)", fontSize: "0.5em" }}>vs ₹15L+</span>
+              <ScrambleNumber value="70%" />{" "}
+              <span style={{ color: "var(--fg-muted)", fontSize: "0.5em" }}>less than legacy</span>
             </div>
             <p style={{ color: "var(--fg-muted)", fontSize: 15, lineHeight: 1.7 }}>
-              No account layers. No junior team padding hours. Every rupee goes into the work — not the overhead of a team built to look big.
+              No account layers. No junior team padding hours. A five-person pod with AI agents replaces what traditional agencies staff with thirty — at a fraction of the cost.
             </p>
           </Reveal>
           <Reveal delay={120} className="value-cell">
@@ -183,7 +190,7 @@ export function HomeContent() {
               <span style={{ color: "var(--fg-muted)", fontSize: "0.5em" }}>vs 6 months</span>
             </div>
             <p style={{ color: "var(--fg-muted)", fontSize: 15, lineHeight: 1.7 }}>
-              ChargeZone. Dynamic pricing across 13,000 EV charge points. Six weeks. Two vendors had quoted six months and ₹40 lakh. Neither of those numbers is a typo.
+              ChargeZone. Dynamic pricing across 13,000 EV charge points. Six weeks to production. Two vendors had quoted six months. Speed is a function of team size and tooling, not urgency.
             </p>
           </Reveal>
           <Reveal delay={240} className="value-cell">
@@ -195,7 +202,7 @@ export function HomeContent() {
               <span style={{ color: "var(--fg-muted)", fontSize: "0.5em" }}>in category</span>
             </div>
             <p style={{ color: "var(--fg-muted)", fontSize: 15, lineHeight: 1.7 }}>
-              Zero AI citations to first recommendation across ChatGPT, Perplexity, and Google AI Mode. Six months. The same brief sat with a traditional SEO agency for three years without moving.
+              Zero AI citations to first recommendation across ChatGPT, Perplexity, and Google AI Mode. Six months. The same brief sat with a traditional SEO agency for three years without progress.
             </p>
           </Reveal>
         </div>
@@ -286,7 +293,7 @@ export function HomeContent() {
           </Reveal>
         </div>
         <div>
-          {(works ?? []).map((w, i) => (
+          {(works).map((w, i) => (
             <Link key={w.slug} href={`/work/${w.slug}`} className="work-row" data-cursor="view">
               <span className="work-num">{String(i + 1).padStart(2, "0")}</span>
               <span className="work-title">{w.title}</span>
@@ -309,7 +316,7 @@ export function HomeContent() {
       <ClientVoice />
 
       {/* ─── 11 SECTORS ─── */}
-      <Sectors />
+      <Sectors industries={industries} />
 
       {/* ─── 12 THESIS ─── */}
       <section className="chapter container-edge thesis-section hairline-top" style={{ background: "var(--bg-deep)" }}>
@@ -345,12 +352,12 @@ export function HomeContent() {
             <div>
               <span className="mono" style={{ marginBottom: 24, display: "block" }}>06 · Start here</span>
               <h2 className="display display-xl" style={{ marginBottom: 32, maxWidth: "14ch" }}>
-                The brief is free. The delay isn't.
+                The conversation is free. The delay compounds.
               </h2>
               <p className="lead" style={{ marginBottom: 48, maxWidth: "44ch" }}>
-                Thirty minutes. No deck. No proposal before work begins. You'll leave knowing exactly what Iteration 01 ships for your category — and what's happening to it while you're reading this.
+                Thirty minutes. No deck. No proposal before work begins. You'll leave knowing exactly what Iteration 01 ships for your category — and what's compounding against you every week you wait.
               </p>
-              <Link href="/contact" className="btn-primary" data-cursor="hover">Book the brief →</Link>
+              <Link href="/contact" className="btn-primary" data-cursor="hover">Start Iteration 01 →</Link>
             </div>
           </div>
         </Reveal>

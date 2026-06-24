@@ -70,8 +70,8 @@ const pillars = [
 ];
 
 const entryPoints = [
-  ["Iteration 01 — ₹50,000–₹1,00,000", "Cloud ecosystem setup. Data security, AI tooling, reporting infrastructure, skills development. The foundation that makes everything else compound."],
-  ["Iterations 02+ — ₹3–5 lakh/month", "The full pod, permanently assigned. GEO, SEO, agentic systems, brand strategy, performance media — built as one integrated system, not a menu of services."],
+  ["Iteration 01 — Foundation", "Cloud ecosystem setup. Data security, AI tooling, reporting infrastructure, skills transfer. Three weeks. The foundation that makes everything after it compound."],
+  ["Iterations 02+ — Full System", "The full pod, permanently assigned. GEO, SEO, agentic systems, brand strategy, performance media — built as one integrated system, not a menu of services. Monthly retainer."],
 ];
 
 export function ServicesContent() {

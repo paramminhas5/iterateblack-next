@@ -40,7 +40,7 @@ export function AboutContent() {
         <Reveal>
           <div style={{ display: "flex", gap: 18, marginBottom: 32 }}>
             <span className="tick" />
-            <span className="eyebrow eyebrow-muted">About · est. 2014 · v2.6</span>
+            <span className="eyebrow eyebrow-muted">About · est. 2014</span>
           </div>
           <h1 className="display display-xl" style={{ maxWidth: "20ch" }}>
             <ScrambleHeadline as="span" text="A studio for founders" triggerOnView accent={false} duration={650} /><br />

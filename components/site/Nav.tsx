@@ -31,7 +31,6 @@ export function Nav() {
         <Link href="/" className="nav-mark">
           <span className="tick" style={{ background: "var(--accent)" }} />
           ITERATE
-          <span className="nav-version">v2.6</span>
         </Link>
         <div className="nav-links">
           {links.map((l) => (
