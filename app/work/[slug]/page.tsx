@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { createClient } from "@supabase/supabase-js";
+import { createServerClient } from "@/integrations/supabase/server";
 import { WorkDetail } from "./WorkDetail";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
 
 export async function generateMetadata({
   params,
@@ -12,8 +10,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const client = createClient(supabaseUrl, supabaseKey);
-    const { data } = await client
+    const supabase = createServerClient();
+    const { data } = await supabase
       .from("case_studies")
       .select("title,client,summary,tags")
       .eq("slug", slug)
@@ -22,7 +20,9 @@ export async function generateMetadata({
 
     if (data) {
       const title = `${data.client} — ${data.title} | Iterate`;
-      const desc = data.summary ?? `How Iterate built compounding marketing infrastructure for ${data.client}.`;
+      const desc =
+        data.summary ??
+        `How Iterate built compounding marketing infrastructure for ${data.client}.`;
       return {
         title,
         description: desc,
@@ -44,7 +44,41 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  return <WorkDetail slug={slug} />;
+  const supabase = createServerClient();
+
+  const { data: caseStudy } = await supabase
+    .from("case_studies")
+    .select("*")
+    .eq("slug", slug)
+    .eq("published", true)
+    .maybeSingle();
+
+  const { data: allCases } = await supabase
+    .from("case_studies")
+    .select("slug,title,tags,client,diagram_key,sort_order")
+    .eq("published", true)
+    .order("sort_order", { ascending: true });
+
+  return (
+    <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://greattasteiterate.com" },
+          { name: "Work", url: "https://greattasteiterate.com/work" },
+          { name: caseStudy?.client ?? slug, url: `https://greattasteiterate.com/work/${slug}` },
+        ]}
+      />
+      <WorkDetail
+        slug={slug}
+        initialData={caseStudy}
+        allCases={allCases ?? []}
+      />
+    </>
+  );
 }

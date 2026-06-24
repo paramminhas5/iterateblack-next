@@ -9,12 +9,13 @@ import { SectionDots } from "./SectionDots";
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
     <>
+      <a href="#main" className="skip-link">Skip to content</a>
       <LenisProvider />
       <Loader />
       <Cursor />
       <div className="grid-overlay" aria-hidden />
       <Nav />
-      <main style={{ position: "relative", zIndex: 2 }}>
+      <main id="main" style={{ position: "relative", zIndex: 2 }}>
         {children}
       </main>
       <Footer />

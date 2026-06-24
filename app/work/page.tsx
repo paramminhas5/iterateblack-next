@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { createServerClient } from "@/integrations/supabase/server";
 import { WorkIndexContent } from "./WorkIndex";
 
 export const metadata: Metadata = {
@@ -14,6 +15,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://greattasteiterate.com/work" },
 };
 
-export default function WorkPage() {
-  return <WorkIndexContent />;
+export default async function WorkPage() {
+  const supabase = createServerClient();
+
+  const { data: works } = await supabase
+    .from("case_studies")
+    .select("slug,title,client,year,tags,summary")
+    .eq("published", true)
+    .order("sort_order", { ascending: true });
+
+  return <WorkIndexContent works={works ?? []} />;
 }

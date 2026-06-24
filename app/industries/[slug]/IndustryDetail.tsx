@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionDiagram } from "@/components/site/SectionDiagram";
 import { Breadcrumbs } from "@/components/site/Breadcrumbs";
@@ -11,67 +9,63 @@ import { ScrambleNumber } from "@/components/site/ScrambleNumber";
 
 type Highlight = { label: string; value: string };
 
-export function IndustryDetail({ slug }: { slug: string }) {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["industry", slug],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("industries")
-        .select("*")
-        .eq("slug", slug)
-        .eq("published", true)
-        .maybeSingle();
-      if (error) throw error;
-      return data;
-    },
-  });
+type IndustryNav = {
+  slug: string;
+  name: string;
+  diagram_key: string;
+  sort_order: number;
+};
 
-  const { data: all } = useQuery({
-    queryKey: ["industries_nav"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("industries")
-        .select("slug,name,diagram_key,sort_order")
-        .eq("published", true)
-        .order("sort_order", { ascending: true });
-      if (error) throw error;
-      return data ?? [];
-    },
-  });
+type RelatedCase = {
+  slug: string;
+  title: string;
+  client: string;
+  year: string;
+  tags: string[];
+  summary: string;
+  diagram_key: string;
+};
 
-  const relatedSlugs = ((data as any)?.related_case_slugs ?? []) as string[];
-  const { data: relatedCases } = useQuery({
-    queryKey: ["industry_cases", slug, relatedSlugs.join(",")],
-    enabled: relatedSlugs.length > 0,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("case_studies")
-        .select("slug,title,client,year,tags,summary,diagram_key")
-        .in("slug", relatedSlugs)
-        .eq("published", true);
-      if (error) throw error;
-      return data ?? [];
-    },
-  });
+interface IndustryDetailProps {
+  slug: string;
+  initialData: any | null;
+  allIndustries: IndustryNav[];
+  relatedCases: RelatedCase[];
+}
 
-  if (isLoading) return <div className="container-edge" style={{ paddingTop: 200 }}><span className="mono">Loading…</span></div>;
-  if (error || !data) return <div className="container-edge" style={{ paddingTop: 200 }}><span className="mono">Not found.</span></div>;
+export function IndustryDetail({ slug, initialData, allIndustries, relatedCases }: IndustryDetailProps) {
+  if (!initialData) {
+    return (
+      <div className="container-edge" style={{ paddingTop: 200 }}>
+        <span className="mono">Not found.</span>
+      </div>
+    );
+  }
 
-  const d: any = data;
+  const d = initialData;
   const highlights = (d.highlights ?? []) as Highlight[];
   const needs = (d.needs ?? []) as string[];
   const offerings = (d.offerings ?? []) as string[];
-  const whyBlocks: string[] = (d.why_us ?? "").split(/\n\s*\n/).map((b: string) => b.trim()).filter(Boolean);
+  const whyBlocks: string[] = (d.why_us ?? "")
+    .split(/\n\s*\n/)
+    .map((b: string) => b.trim())
+    .filter(Boolean);
 
-  const idx = (all ?? []).findIndex((i) => i.slug === slug);
-  const next = all && all.length > 0 ? all[(idx + 1) % all.length] : null;
+  const idx = allIndustries.findIndex((i) => i.slug === slug);
+  const next = allIndustries.length > 0 ? allIndustries[(idx + 1) % allIndustries.length] : null;
 
   return (
     <>
       <section className="case-hero case-hero-bg">
         <SectionDiagram diagram={d.diagram_key} mode="hero-bg" />
         <div className="container-edge case-hero-inner">
-          <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Industries", to: "/industries" }, { label: d.name }]} />
+          <Breadcrumbs
+            items={[
+              { label: "Home", to: "/" },
+              { label: "Industries", to: "/industries" },
+              { label: d.name },
+            ]}
+          />
           <Reveal>
             <div style={{ display: "flex", gap: 18, marginTop: 28, marginBottom: 28, alignItems: "center", flexWrap: "wrap" }}>
               <span className="tick" />
@@ -88,7 +82,9 @@ export function IndustryDetail({ slug }: { slug: string }) {
           <div style={{ display: "grid", gridTemplateColumns: `repeat(${highlights.length},1fr)` }} className="metrics-grid">
             {highlights.map((h, i) => (
               <div key={i} style={{ padding: "56px 32px", borderRight: i < highlights.length - 1 ? "1px solid var(--hairline)" : "none" }}>
-                <div className="display" style={{ fontSize: "clamp(32px,4vw,64px)", color: "var(--accent)", fontWeight: 200, lineHeight: 1 }}><ScrambleNumber value={h.value} /></div>
+                <div className="display" style={{ fontSize: "clamp(32px,4vw,64px)", color: "var(--accent)", fontWeight: 200, lineHeight: 1 }}>
+                  <ScrambleNumber value={h.value} />
+                </div>
                 <div className="mono" style={{ marginTop: 14 }}>{h.label}</div>
               </div>
             ))}
@@ -105,18 +101,24 @@ export function IndustryDetail({ slug }: { slug: string }) {
             </div>
             <ul className="ind-list">
               {needs.map((n, i) => (
-                <li key={i}><span className="mono">{String(i + 1).padStart(2, "0")}</span><span>{n}</span></li>
+                <li key={i}>
+                  <span className="mono">{String(i + 1).padStart(2, "0")}</span>
+                  <span>{n}</span>
+                </li>
               ))}
             </ul>
           </Reveal>
           <Reveal delay={120}>
             <div style={{ display: "flex", gap: 18, marginBottom: 24 }}>
               <span className="tick" />
-              <span className="eyebrow eyebrow-muted">02 · What we provide</span>
+              <span className="eyebrow eyebrow-muted">02 · What we deliver</span>
             </div>
             <ul className="ind-list">
               {offerings.map((o, i) => (
-                <li key={i}><span className="mono" style={{ color: "var(--accent)" }}>{String(i + 1).padStart(2, "0")}</span><span>{o}</span></li>
+                <li key={i}>
+                  <span className="mono" style={{ color: "var(--accent)" }}>{String(i + 1).padStart(2, "0")}</span>
+                  <span>{o}</span>
+                </li>
               ))}
             </ul>
           </Reveal>
@@ -134,7 +136,9 @@ export function IndustryDetail({ slug }: { slug: string }) {
             </Reveal>
             {whyBlocks.map((block, i) => (
               <Reveal key={i} delay={i * 120}>
-                <div className="mono" style={{ color: "var(--accent)", marginBottom: 14, marginTop: i ? 36 : 0 }}>{String(i + 1).padStart(2, "0")}</div>
+                <div className="mono" style={{ color: "var(--accent)", marginBottom: 14, marginTop: i ? 36 : 0 }}>
+                  {String(i + 1).padStart(2, "0")}
+                </div>
                 <p className="lead" style={{ fontSize: 18 }}>{block}</p>
               </Reveal>
             ))}
@@ -145,7 +149,7 @@ export function IndustryDetail({ slug }: { slug: string }) {
         </section>
       )}
 
-      {(relatedCases?.length ?? 0) > 0 && (
+      {relatedCases.length > 0 && (
         <section className="hairline-top" style={{ background: "var(--bg-deep)" }}>
           <div className="container-edge" style={{ paddingTop: 100, paddingBottom: 32 }}>
             <Reveal>
@@ -156,7 +160,7 @@ export function IndustryDetail({ slug }: { slug: string }) {
             </Reveal>
           </div>
           <div className="outcome-list">
-            {(relatedCases ?? []).map((c, i) => (
+            {relatedCases.map((c, i) => (
               <Link key={c.slug} href={`/work/${c.slug}`} className="outcome-row" data-cursor="view">
                 <span className="work-num">{String(i + 1).padStart(2, "0")}</span>
                 <div className="outcome-body">
@@ -174,9 +178,9 @@ export function IndustryDetail({ slug }: { slug: string }) {
         <section className="hairline-top">
           <NextItem
             href={`/industries/${next.slug}`}
-            label={`Industry ${String(((idx + 1) % all!.length) + 1).padStart(2, "0")}`}
+            label={`Industry ${String(((idx + 1) % allIndustries.length) + 1).padStart(2, "0")}`}
             title={next.name}
-            diagram={(next as any).diagram_key}
+            diagram={next.diagram_key}
             kind="industry"
           />
         </section>

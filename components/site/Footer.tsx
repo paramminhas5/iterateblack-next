@@ -4,10 +4,10 @@ import { ContextualFooter } from "./ContextualFooter";
 export function Footer() {
   return (
     <footer>
-      {/* ── Page-contextual CTA strip — copy changes per route ── */}
+      {/* Page-contextual CTA strip — copy changes per route */}
       <ContextualFooter />
 
-      {/* ── Standard footer ── */}
+      {/* Standard footer */}
       <div className="hairline-top site-footer" style={{ background: "var(--bg-deep)" }}>
         <div className="container-edge site-footer-grid">
           <div className="site-footer-cta">
@@ -15,7 +15,7 @@ export function Footer() {
               <span className="tick" />
               <div>
                 <div className="display display-md" style={{ marginBottom: 18 }}>
-                  Great Taste & Iterate
+                  Iterate
                 </div>
                 <p style={{ fontSize: 14, color: "var(--fg-muted)", lineHeight: 1.7, maxWidth: "38ch", marginBottom: 20 }}>
                   AI-native marketing studio · Est. 2014 · Five people, zero account layers, one compounding system.
@@ -30,10 +30,7 @@ export function Footer() {
           <div className="site-footer-cols">
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <span className="mono" style={{ color: "var(--fg-dim)" }}>Work</span>
-              <Link href="/work/chargezone" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>ChargeZone</Link>
-              <Link href="/work/pickyourtrail" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>Pickyourtrail</Link>
-              <Link href="/work/monkspaces" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>Monkspaces</Link>
-              <Link href="/work" data-cursor="hover" style={{ fontSize: 13 }}>All work →</Link>
+              <Link href="/work" data-cursor="hover" style={{ fontSize: 13 }}>All engagements →</Link>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <span className="mono" style={{ color: "var(--fg-dim)" }}>Site</span>
@@ -47,8 +44,7 @@ export function Footer() {
               <a href="mailto:hello@greattasteiterate.com" data-cursor="hover" style={{ fontSize: 13, wordBreak: "break-all" }}>
                 hello@greattasteiterate.com
               </a>
-              <a href="#" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>LinkedIn</a>
-              <a href="#" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>Read.cv</a>
+              <a href="https://linkedin.com/company/iterate-studio" target="_blank" rel="noopener noreferrer" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>LinkedIn</a>
             </div>
           </div>
         </div>

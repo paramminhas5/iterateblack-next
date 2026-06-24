@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Reveal } from "@/components/site/Reveal";
 import { ContextualDiagram } from "@/components/site/three/ContextualDiagram";
 import { ScrambleHeadline } from "@/components/site/ScrambleHeadline";
@@ -16,22 +14,20 @@ const BUILT: Record<string, string> = {
   "real-estate": "Community lattice CRM + buyer-intent scoring",
 };
 
-export function Sectors() {
-  const { data: industries } = useQuery({
-    queryKey: ["industries_panels"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("industries")
-        .select("slug,name,tagline,summary,diagram_key,sort_order")
-        .eq("published", true)
-        .order("sort_order", { ascending: true });
-      if (error) throw error;
-      return data ?? [];
-    },
-  });
+type Industry = {
+  slug: string;
+  name: string;
+  tagline: string;
+  summary: string;
+  diagram_key: string;
+  sort_order: number;
+};
 
-  const items = industries ?? [];
+interface SectorsProps {
+  industries: Industry[];
+}
 
+export function Sectors({ industries }: SectorsProps) {
   return (
     <section className="chapter container-edge hairline-top sectors-section">
       <Reveal>
@@ -43,16 +39,16 @@ export function Sectors() {
           <Link href="/industries" className="btn-ghost" data-cursor="hover">All industries →</Link>
         </div>
         <h2 className="display display-md" style={{ maxWidth: "20ch", marginBottom: 24 }}>
-          Six sectors. <span style={{ color: "var(--fg-muted)" }}>One operating model — and one named thing we shipped in each.</span>
+          Six sectors. <span style={{ color: "var(--fg-muted)" }}>One operating model — named infrastructure in each.</span>
         </h2>
       </Reveal>
 
       <div className="sector-stack">
-        {items.map((s, i) => (
+        {industries.map((s, i) => (
           <article key={s.slug} className="sector-panel">
             <div className="sector-panel-inner">
               <div className="sector-panel-copy">
-                <span className="mono sector-panel-num">{`Industry ${String(i + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`}</span>
+                <span className="mono sector-panel-num">{`Industry ${String(i + 1).padStart(2, "0")} / ${String(industries.length).padStart(2, "0")}`}</span>
                 <h3 className="display sector-panel-title">
                   <ScrambleHeadline as="span" text={s.name} triggerOnView accent={false} duration={550} />
                 </h3>
@@ -69,7 +65,7 @@ export function Sectors() {
                 </Link>
               </div>
               <div className="sector-panel-diagram" aria-hidden>
-                <ContextualDiagram name={(s as any).diagram_key} />
+                <ContextualDiagram name={s.diagram_key} />
               </div>
             </div>
           </article>

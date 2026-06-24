@@ -1,8 +1,5 @@
 @import "tailwindcss" source(none);
-@source "../src";
 @import "tw-animate-css";
-
-@custom-variant dark (&:is(.dark *));
 
 /* ─────────────────────────────────────────────
    Great Taste & Iterate — cinematic design system
@@ -57,7 +54,7 @@
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url("https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2") format("woff2");
+  src: url("/fonts/inter-variable-latin.woff2") format("woff2");
 }
 
 * { box-sizing: border-box; }
@@ -69,13 +66,28 @@ body {
   font-size: 15px;
   line-height: 1.6;
   overflow-x: hidden;
-  cursor: none;
 }
 @media (max-width: 900px), (pointer: coarse) {
-  body { cursor: auto; }
+  body { /* native cursor preserved */ }
 }
 
 ::selection { background: var(--accent); color: var(--bg); }
+
+/* ── Focus styles ─────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.btn-primary:focus-visible { outline-color: var(--bg); outline-offset: -3px; }
+
+/* ── Skip to content ──────────────────────────── */
+.skip-link {
+  position: fixed; top: -100px; left: 16px; z-index: 10000;
+  padding: 12px 20px; background: var(--accent); color: var(--bg);
+  font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500;
+  transition: top .2s ease;
+}
+.skip-link:focus { top: 16px; }
 
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; }
@@ -261,14 +273,14 @@ button { font-family: inherit; }
 .field input::placeholder, .field textarea::placeholder { color: rgba(232,234,236,0.25); }
 .btn-primary {
   display: inline-flex; align-items: center; gap: 14px; padding: 18px 28px;
-  background: var(--accent); color: var(--bg); border: none; cursor: none;
+  background: var(--accent); color: var(--bg); border: none; cursor: pointer;
   font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500;
   transition: transform .3s cubic-bezier(0.65,0,0.35,1);
 }
 .btn-primary:hover { transform: translateX(6px); }
 .btn-ghost {
   display: inline-flex; align-items: center; gap: 14px; padding: 16px 0;
-  color: var(--fg); cursor: none;
+  color: var(--fg); cursor: pointer;
   font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 400;
   border-bottom: 1px solid var(--hairline);
 }
@@ -1312,6 +1324,25 @@ button { font-family: inherit; }
   font-size: 18px;
   font-weight: 100;
 }
+.ticker-pause {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  background: color-mix(in oklab, var(--bg-deep) 90%, transparent);
+  border: 1px solid var(--hairline);
+  color: var(--fg-muted);
+  font-size: 10px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.ticker-pause:hover { color: var(--accent); border-color: var(--accent); }
 
 @media (max-width: 640px) {
   .case-client-mark-hero svg.client-mark,
