@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Reveal } from "@/components/site/Reveal";
 import { ScrambleHeadline } from "@/components/site/ScrambleHeadline";
+import { ScrambleCycler } from "@/components/site/ScrambleCycler";
 import { ScrambleNumber } from "@/components/site/ScrambleNumber";
 import { SectionDiagram } from "@/components/site/SectionDiagram";
 import { IterationSteps } from "@/components/site/sections/IterationSteps";
@@ -58,8 +59,11 @@ export function HowWeWorkContent() {
             <span className="eyebrow eyebrow-muted">How we work · the operating model</span>
           </div>
           <h1 className="display display-xl" style={{ maxWidth: "18ch" }}>
-            <ScrambleHeadline as="span" text="Five people." triggerOnView accent={false} duration={550} /><br />
-            <span style={{ color: "var(--fg-muted)" }}>AI agents. One number.</span>
+            <ScrambleCycler
+              phrases={["AI chooses first.", "We make it choose you.", "Every week. Compounding."]}
+              scrambleMs={520}
+              holdMs={1100}
+            />
           </h1>
           <p className="lead" style={{ marginTop: 40, maxWidth: "52ch" }}>
             No account layers. No junior team padding hours. No handoffs between departments. One permanently-assigned pod runs every discipline as one integrated system — with custom AI agents handling the volume that used to require headcount.
