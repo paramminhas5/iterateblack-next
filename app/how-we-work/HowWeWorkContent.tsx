@@ -60,7 +60,7 @@ export function HowWeWorkContent() {
           </div>
           <h1 className="display display-xl" style={{ maxWidth: "18ch" }}>
             <ScrambleCycler
-              phrases={["AI chooses first.", "We make it choose you.", "Every week. Compounding."]}
+              phrases={["One pod. Every discipline.", "Three weeks to first result.", "Infrastructure, not campaigns."]}
               scrambleMs={520}
               holdMs={1100}
             />

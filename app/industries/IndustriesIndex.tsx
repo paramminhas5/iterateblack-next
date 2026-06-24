@@ -52,7 +52,7 @@ const b2c = [
     proof: "Coliwoo — full demand infrastructure, brief to live in 18 days",
   },
   {
-    slug: null,
+    slug: "tourism",
     title: "Tourism & Destination",
     what: "Destination brand, AI citation authority, experience platform design",
     proof: "Rajasthan Tourism — state authority brand + AI visibility programme",

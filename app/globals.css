@@ -1288,17 +1288,14 @@ button { font-family: inherit; }
   right: 0;
   background: linear-gradient(to left, var(--bg-deep), transparent);
 }
-.outcomes-ticker-track {
-  display: inline-flex;
-  gap: 0;
-  animation: ticker-scroll 38s linear infinite;
-}
-.outcomes-ticker-track:hover {
-  animation-play-state: paused;
-}
 @keyframes ticker-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+.outcomes-ticker-track {
+  display: inline-flex;
+  gap: 0;
+  animation: ticker-scroll 60s linear infinite;
 }
 .ticker-item {
   display: inline-flex;

@@ -127,9 +127,6 @@ export function HomeContent({ works, industries }: HomeContentProps) {
       {/* ─── 02 SCARCITY ─── */}
       <ScarcityBar />
 
-      {/* ─── 02b OUTCOMES TICKER ─── */}
-      <OutcomesTicker />
-
       {/* ─── 03 PROOF ─── */}
       <ProofBar />
 
@@ -206,6 +203,9 @@ export function HomeContent({ works, industries }: HomeContentProps) {
           </Reveal>
         </div>
       </section>
+
+      {/* ─── OUTCOMES DIVIDER ─── */}
+      <OutcomesTicker />
 
       {/* ─── 06 WHAT WE DO ─── */}
       <section className="chapter container-edge what-section">
@@ -319,7 +319,7 @@ export function HomeContent({ works, industries }: HomeContentProps) {
 
       {/* ─── 12 THESIS ─── */}
       <section className="chapter container-edge thesis-section hairline-top" style={{ background: "var(--bg-deep)" }}>
-        <div className="three-bg three-bg-full"><CitationPulse /></div>
+        <div className="three-bg three-bg-full"><CompoundCurve /></div>
         <Reveal>
           <div style={{ display: "flex", gap: 18, marginBottom: 18 }}>
             <span className="tick" />

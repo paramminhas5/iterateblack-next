@@ -29,7 +29,7 @@ export function WorkIndexContent({ works }: WorkIndexProps) {
           </div>
           <h1 className="display display-2xl hero-headline">
             <ScrambleCycler
-              phrases={["Seven engagements.", "Zero campaigns.", "Infrastructure that compounds."]}
+              phrases={["Seven engagements.", "Zero campaigns.", "Built to run. Not to end."]}
               scrambleMs={520}
               holdMs={900}
             />

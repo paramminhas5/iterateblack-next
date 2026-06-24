@@ -73,9 +73,10 @@ export function ScrambleCycler({
       });
     };
 
-    // Delay start if loader is showing (first visit)
+    // Show first phrase immediately as static text, then start scrambling after loader
+    setOut(phrases[0] ?? "");
     const loaderAlreadyShown = sessionStorage.getItem("gti-loader-shown");
-    const delay = loaderAlreadyShown ? 100 : 2800;
+    const delay = loaderAlreadyShown ? 200 : 2900;
     timeoutRef.current = window.setTimeout(() => {
       if (!cancelled) step();
     }, delay);
