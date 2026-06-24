@@ -1646,3 +1646,57 @@ button { font-family: inherit; }
   .network-grid { grid-template-columns: repeat(2, 1fr); }
   .network-card { padding: 24px 16px; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOUNDER CARD — featured team member
+   ═══════════════════════════════════════════════════════════════════ */
+
+.founder-card {
+  padding: 48px 40px;
+  border: 1px solid var(--hairline);
+  background: rgba(11, 15, 21, 0.55);
+  max-width: 720px;
+}
+.founder-card-name {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  line-height: 1.1;
+  margin: 12px 0 20px;
+}
+.founder-card-bio {
+  font-size: 16px;
+  color: var(--fg-muted);
+  line-height: 1.65;
+  max-width: 52ch;
+  margin-bottom: 24px;
+}
+@media (max-width: 600px) {
+  .founder-card { padding: 32px 24px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   NETWORK DISCIPLINES — pill tags with diagram behind
+   ═══════════════════════════════════════════════════════════════════ */
+
+.network-disciplines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.network-discipline-pill {
+  padding: 14px 24px;
+  border: 1px solid var(--hairline-strong);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--fg);
+  background: color-mix(in oklab, var(--bg-deep) 70%, transparent);
+  backdrop-filter: blur(8px);
+  transition: border-color .3s, color .3s;
+}
+.network-discipline-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}

@@ -10,6 +10,7 @@ const links = [
   { href: "/work", label: "Work" },
   { href: "/how-we-work", label: "How We Work" },
   { href: "/about", label: "About" },
+  { href: "/careers", label: "Careers" },
 ];
 
 export function Nav() {

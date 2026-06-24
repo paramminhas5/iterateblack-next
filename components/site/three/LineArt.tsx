@@ -898,7 +898,7 @@ export function CitationPulse() {
 }
 
 /* ───────────────────────── 18 · BrandSignalGraph ───────────────────────── */
-/** Radial authority map: citation signals pulse outward from central brand node. */
+/** Rising authority ladder: horizontal bars grow as scroll progresses, signal strength building. */
 export function BrandSignalGraph() {
   const setup = useCallback((ctx: any) => {
     const { THREE, scene, size } = ctx;
@@ -908,80 +908,57 @@ export function BrandSignalGraph() {
     const group = new THREE.Group();
     scene.add(group);
 
-    // Central brand node — prominent
-    const core = new THREE.LineSegments(
-      new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.28, 1)),
-      new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.95 })
+    // Vertical axis line
+    const axisGeo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(-2.8, -2.2, 0),
+      new THREE.Vector3(-2.8, 2.2, 0),
+    ]);
+    const axis = new THREE.Line(axisGeo, new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.3 }));
+    group.add(axis);
+
+    // Horizontal signal bars — stacked vertically, grow left-to-right
+    const bars: any[] = [];
+    const barCount = 10;
+    for (let i = 0; i < barCount; i++) {
+      const y = -2.0 + (i / (barCount - 1)) * 4.0;
+      // Target width increases with height (authority growing)
+      const targetW = 1.0 + (i / (barCount - 1)) * 4.0;
+      const barGeo = new THREE.PlaneGeometry(0.01, 0.22);
+      const barMat = new THREE.MeshBasicMaterial({
+        color: i >= barCount - 3 ? ACCENT : LINE,
+        transparent: true,
+        opacity: 0.7,
+        side: THREE.DoubleSide,
+      });
+      const bar = new THREE.Mesh(barGeo, barMat);
+      bar.position.set(-2.8, y, 0);
+      group.add(bar);
+      bars.push({ bar, targetW, y, idx: i });
+    }
+
+    // "Your brand" label node at the top
+    const brandNode = new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.18, 0)),
+      new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.9 })
     );
-    group.add(core);
-
-    // Concentric authority rings (signal waves)
-    const waves: any[] = [];
-    for (let i = 1; i <= 6; i++) {
-      const radius = 0.5 * i;
-      const pts: any[] = [];
-      const segments = 64;
-      for (let j = 0; j <= segments; j++) {
-        const a = (j / segments) * Math.PI * 2;
-        pts.push(new THREE.Vector3(Math.cos(a) * radius, Math.sin(a) * radius, 0));
-      }
-      const ring = new THREE.Line(
-        new THREE.BufferGeometry().setFromPoints(pts),
-        new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0 })
-      );
-      group.add(ring);
-      waves.push({ ring, radius, phase: i * 0.8 });
-    }
-
-    // Competitor nodes that fade as authority grows
-    const competitors: any[] = [];
-    for (let i = 0; i < 5; i++) {
-      const a = (i / 5) * Math.PI * 2 + 0.3;
-      const r = 2.8 + Math.random() * 0.6;
-      const pos = new THREE.Vector3(Math.cos(a) * r, Math.sin(a) * r, 0);
-      const node = new THREE.LineSegments(
-        new THREE.EdgesGeometry(new THREE.OctahedronGeometry(0.12, 0)),
-        new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.6 })
-      );
-      node.position.copy(pos);
-      group.add(node);
-      competitors.push({ node, baseOpacity: 0.6 });
-    }
-
-    // Signal rays from center outward
-    const rays: any[] = [];
-    for (let i = 0; i < 12; i++) {
-      const a = (i / 12) * Math.PI * 2;
-      const end = new THREE.Vector3(Math.cos(a) * 3.2, Math.sin(a) * 3.2, 0);
-      const geo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), end]);
-      const ray = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0 }));
-      group.add(ray);
-      rays.push({ ray, phase: i * 0.5 });
-    }
+    brandNode.position.set(2.0, 2.0, 0);
+    group.add(brandNode);
 
     return {
       camera,
       update: (t: number, p: number) => {
-        group.rotation.z = t * 0.02;
-        core.rotation.y = t * 0.4;
-        core.rotation.x = t * 0.2;
-
-        // Waves pulse outward continuously
-        waves.forEach(({ ring, phase }) => {
-          const wave = Math.sin(t * 0.8 - phase);
-          ring.material.opacity = Math.max(0, wave) * 0.5 + p * 0.2;
+        // Bars grow based on combination of time + scroll
+        const progress = Math.min(1, t * 0.06 + p * 0.6);
+        bars.forEach(({ bar, targetW, idx }) => {
+          const barProgress = Math.min(1, progress * (1 + idx * 0.1));
+          const w = 0.1 + targetW * barProgress;
+          bar.scale.x = w / 0.01;
+          bar.position.x = -2.8 + w / 2;
+          bar.material.opacity = 0.4 + barProgress * 0.5;
         });
-
-        // Rays pulse
-        rays.forEach(({ ray, phase }) => {
-          const pulse = Math.sin(t * 1.2 - phase);
-          ray.material.opacity = Math.max(0, pulse) * 0.35 + p * 0.15;
-        });
-
-        // Competitors fade as p increases (your authority displaces them)
-        competitors.forEach(({ node }) => {
-          node.material.opacity = Math.max(0.1, 0.6 - p * 0.5);
-        });
+        brandNode.rotation.y = t * 0.5;
+        brandNode.material.opacity = 0.5 + progress * 0.5;
+        brandNode.scale.setScalar(0.6 + progress * 0.5);
       },
     };
   }, []);
@@ -1476,21 +1453,22 @@ export function ConvergenceNode() {
         core.rotation.x = t * 0.15;
         core.scale.setScalar(1 + Math.sin(t * 0.8) * 0.05);
 
-        // Citation paths pulse in sequence — always animating
+        // Citation paths pulse in sequence — time + scroll driven
+        const scrollBoost = _p * 0.4;
         paths.forEach(({ line, phase }) => {
-          const wave = Math.sin(t * 0.7 - phase);
-          line.material.opacity = Math.max(0, wave) * 0.7;
+          const wave = Math.sin(t * 0.7 + scrollBoost * 3 - phase);
+          line.material.opacity = Math.max(0, wave) * 0.7 + _p * 0.15;
         });
 
         // Source nodes pulse when their path is active
         sources.forEach(({ node }, i) => {
-          const wave = Math.sin(t * 0.7 - i * 0.45);
+          const wave = Math.sin(t * 0.7 + scrollBoost * 3 - i * 0.45);
           node.material.opacity = 0.3 + Math.max(0, wave) * 0.6;
           node.material.color.setHex(wave > 0.3 ? ACCENT : LINE);
         });
 
-        // Competitors fade and shrink over time cycle
-        const dominance = (Math.sin(t * 0.15) + 1) / 2;
+        // Competitors fade with time cycle + scroll
+        const dominance = Math.min(1, (Math.sin(t * 0.15) + 1) / 2 + _p * 0.3);
         competitors.forEach(({ node, phase }) => {
           node.material.opacity = 0.4 - dominance * 0.3;
           const s = 1 - dominance * 0.3 + Math.sin(t + phase) * 0.05;
