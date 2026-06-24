@@ -32,7 +32,7 @@ const aiNative = [
     body: "Schema markup, llms.txt deployment, knowledge-graph mapping, entity definition, structured data across your entire digital presence. The infrastructure layer that makes every other service compound faster.",
     aiEdge: "Our schema linter audits 2,000 URLs in 90 seconds against the entity graph we build for your category. Same audit manually: three weeks, one analyst.",
     proof: "Deployed across every client engagement since 2023. Foundation of all GEO work.",
-    diagram: "citation",
+    diagram: "signal",
   },
   {
     num: "03",
@@ -50,7 +50,7 @@ const aiNative = [
     body: "Editorial placement engineering, citation-worthy content architecture, authority signal development, AI-optimized PR. Not traditional link building — structured authority that AI systems weight when choosing which brand to recommend.",
     aiEdge: "We track citation velocity weekly. When a competitor gets cited and you don't, the model weights shift. We reverse-engineer what triggers those shifts and build accordingly.",
     proof: "Rajasthan Tourism — AI citation authority across ChatGPT, Perplexity, Google AI Mode.",
-    diagram: "signal",
+    diagram: "convergence",
   },
 ];
 
@@ -221,9 +221,10 @@ export function ServicesContent() {
           </aside>
 
           <aside className="srv-rail-canvas" aria-hidden>
-            <div className="srv-scene" data-on={active === 0 || active === 1 ? "true" : undefined}><CitationPulse /></div>
-            <div className="srv-scene" data-on={active === 3 ? "true" : undefined}><BrandSignalGraph /></div>
+            <div className="srv-scene" data-on={active === 0 ? "true" : undefined}><CitationPulse /></div>
+            <div className="srv-scene" data-on={active === 1 ? "true" : undefined}><BrandSignalGraph /></div>
             <div className="srv-scene" data-on={active === 2 ? "true" : undefined}><AgentLoop /></div>
+            <div className="srv-scene" data-on={active === 3 ? "true" : undefined}><ConvergenceNode /></div>
           </aside>
 
           <div className="srv-rail-body">
@@ -238,6 +239,7 @@ export function ServicesContent() {
                   {p.diagram === "citation" && <CitationPulse />}
                   {p.diagram === "signal" && <BrandSignalGraph />}
                   {p.diagram === "agent" && <AgentLoop />}
+                  {p.diagram === "convergence" && <ConvergenceNode />}
                 </div>
                 <Reveal>
                   <div className="srv-stage-head">

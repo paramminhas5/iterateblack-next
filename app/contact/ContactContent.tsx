@@ -1,18 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { z } from "zod";
-import { supabase } from "@/integrations/supabase/client";
 import { Reveal } from "@/components/site/Reveal";
 import { RingTunnel } from "@/components/site/three/LineArt";
-
-const schema = z.object({
-  name: z.string().trim().min(1, "Required").max(120),
-  email: z.string().trim().email("Invalid email").max(254),
-  company: z.string().trim().max(160).optional().or(z.literal("")),
-  budget: z.string().trim().max(80).optional().or(z.literal("")),
-  message: z.string().trim().min(10, "Please provide more context.").max(4000),
-});
+import { submitContactForm, type SubmitResult } from "./actions";
 
 export function ContactContent() {
   const [state, setState] = useState<"idle" | "submitting" | "ok" | "err">("idle");
@@ -22,27 +13,23 @@ export function ContactContent() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setServerErr(null);
-    const fd = new FormData(e.currentTarget);
-    const raw = Object.fromEntries(fd.entries());
-    const parsed = schema.safeParse(raw);
-    if (!parsed.success) {
-      const errs: Record<string, string> = {};
-      parsed.error.issues.forEach((i) => { errs[i.path[0] as string] = i.message; });
-      setErrors(errs);
-      return;
-    }
     setErrors({});
     setState("submitting");
-    const { error } = await supabase.from("contact_leads").insert({
-      name: parsed.data.name,
-      email: parsed.data.email,
-      company: parsed.data.company || null,
-      budget: parsed.data.budget || null,
-      message: parsed.data.message,
-      source: "website",
-    });
-    if (error) { setState("err"); setServerErr("Something didn't go through. Try again or email hello@greattasteiterate.com."); return; }
-    setState("ok");
+
+    const formData = new FormData(e.currentTarget);
+    const result: SubmitResult = await submitContactForm(formData);
+
+    if (result.success) {
+      setState("ok");
+    } else {
+      if (result.errors) {
+        setErrors(result.errors);
+        setState("idle");
+      } else {
+        setServerErr(result.serverError ?? "Something went wrong.");
+        setState("err");
+      }
+    }
   }
 
   return (
@@ -86,9 +73,20 @@ export function ContactContent() {
               </div>
             ) : (
               <form onSubmit={onSubmit} noValidate>
-                <div className="field"><label>Your name</label><input name="name" placeholder="Jane Doe" autoComplete="name" />{errors.name && <span style={{ color: "var(--accent)", fontSize: 11 }}>{errors.name}</span>}</div>
-                <div className="field"><label>Email</label><input name="email" type="email" placeholder="jane@company.com" autoComplete="email" />{errors.email && <span style={{ color: "var(--accent)", fontSize: 11 }}>{errors.email}</span>}</div>
-                <div className="field"><label>Company</label><input name="company" placeholder="Acme Robotics" /></div>
+                <div className="field">
+                  <label>Your name</label>
+                  <input name="name" placeholder="Jane Doe" autoComplete="name" />
+                  {errors.name && <span style={{ color: "var(--accent)", fontSize: 11 }}>{errors.name}</span>}
+                </div>
+                <div className="field">
+                  <label>Email</label>
+                  <input name="email" type="email" placeholder="jane@company.com" autoComplete="email" />
+                  {errors.email && <span style={{ color: "var(--accent)", fontSize: 11 }}>{errors.email}</span>}
+                </div>
+                <div className="field">
+                  <label>Company</label>
+                  <input name="company" placeholder="Acme Robotics" />
+                </div>
                 <div className="field">
                   <label>Budget range</label>
                   <select name="budget" defaultValue="" style={{ background: "transparent", color: "var(--fg)" }}>
