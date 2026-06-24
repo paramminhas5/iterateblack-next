@@ -244,7 +244,10 @@ export function ServicesContent() {
             ))}
           </aside>
 
-          <aside className="srv-rail-canvas" aria-hidden data-scroll-progress={railP}>
+          <aside className="srv-rail-canvas" aria-hidden data-scroll-progress={
+            // Map railP so the active diagram gets 0→1 within its stage
+            Math.min(1, Math.max(0, (railP * 4) - active))
+          }>
             <div className="srv-scene" data-on={active === 0 ? "true" : undefined}><CitationPulse /></div>
             <div className="srv-scene" data-on={active === 1 ? "true" : undefined}><BrandSignalGraph /></div>
             <div className="srv-scene" data-on={active === 2 ? "true" : undefined}><AgentLoop /></div>
