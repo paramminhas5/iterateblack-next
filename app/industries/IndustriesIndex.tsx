@@ -58,7 +58,7 @@ const b2c = [
     proof: "Rajasthan Tourism — state authority brand + AI visibility programme",
   },
   {
-    slug: null,
+    slug: "d2c",
     title: "D2C & E-commerce",
     what: "Community building, conversion infrastructure, performance creative, brand design",
     proof: "Solesearch — sneaker & collectibles marketplace, 350K+ community, 30+ brand shows",

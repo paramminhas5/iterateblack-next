@@ -13,7 +13,7 @@ export function Footer() {
               <span className="tick" />
               <div>
                 <div className="display display-md" style={{ marginBottom: 18 }}>
-                  Iterate
+                  Hyperiterate
                 </div>
                 <p style={{ fontSize: 14, color: "var(--fg-muted)", lineHeight: 1.7, maxWidth: "38ch", marginBottom: 20 }}>
                   AI-native marketing studio · Est. 2014 · Every discipline, AI-accelerated, one pod.
@@ -56,7 +56,7 @@ export function Footer() {
         </div>
 
         <div className="container-edge hairline-top site-footer-meta">
-          <span className="mono">© {new Date().getFullYear()} Great Taste &amp; Iterate</span>
+          <span className="mono">© {new Date().getFullYear()} Hyperiterate</span>
           <span className="mono" style={{ color: "var(--fg-dim)" }}>
             Built in-house · AI-indexed · <a href="/llms.txt" style={{ color: "inherit" }}>llms.txt</a>
           </span>

@@ -32,7 +32,7 @@ export function Nav() {
       <nav className={`nav${scrolled ? " is-scrolled" : ""}${open ? " is-menu-open" : ""}`}>
         <Link href="/" className="nav-mark">
           <span className="tick" style={{ background: "var(--accent)" }} />
-          ITERATE
+          HYPERITERATE
         </Link>
         <div className="nav-links">
           {links.map((l) => (

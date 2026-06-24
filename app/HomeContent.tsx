@@ -14,6 +14,7 @@ import {
   CompoundCurve,
   CitationPulse,
   RingTunnel,
+  WireGlobe,
 } from "@/components/site/three/LineArt";
 import { ScrambleNumber } from "@/components/site/ScrambleNumber";
 import { ScrambleCycler } from "@/components/site/ScrambleCycler";
@@ -319,7 +320,7 @@ export function HomeContent({ works, industries }: HomeContentProps) {
 
       {/* ─── 12 THESIS ─── */}
       <section className="chapter container-edge thesis-section hairline-top" style={{ background: "var(--bg-deep)" }}>
-        <div className="three-bg three-bg-full"><CompoundCurve /></div>
+        <div className="three-bg three-bg-full"><WireGlobe /></div>
         <Reveal>
           <div style={{ display: "flex", gap: 18, marginBottom: 18 }}>
             <span className="tick" />
@@ -348,10 +349,10 @@ export function HomeContent({ works, industries }: HomeContentProps) {
             <div>
               <span className="mono" style={{ marginBottom: 24, display: "block" }}>06 · Start here</span>
               <h2 className="display display-xl" style={{ marginBottom: 32, maxWidth: "14ch" }}>
-                The conversation is free. The delay compounds.
+                Tell us what category you're playing in.
               </h2>
               <p className="lead" style={{ marginBottom: 48, maxWidth: "44ch" }}>
-                Thirty minutes. No deck. No proposal before work begins. You'll leave knowing exactly what Iteration 01 ships for your category — and what's compounding against you every week you wait.
+                Thirty minutes. You'll leave knowing what Iteration 01 ships for your category — and where your competitors stand across every AI engine.
               </p>
               <Link href="/contact" className="btn-primary" data-cursor="hover">Start Iteration 01 →</Link>
             </div>

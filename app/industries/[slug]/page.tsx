@@ -96,6 +96,40 @@ export default async function Page({
     };
   }
 
+  if (!industry && slug === "d2c") {
+    industry = {
+      slug: "d2c",
+      name: "D2C & E-commerce",
+      tagline: "Community-first brands that AI engines recommend",
+      summary: "D2C brands win when they build community, not just conversion funnels. We build the brand infrastructure, community systems, and AI visibility that makes your brand the one people — and machines — talk about.",
+      diagram_key: "CommunityLattice",
+      highlights: [
+        { label: "Community built for Solesearch", value: "350K+" },
+        { label: "Brand activations delivered", value: "30+" },
+        { label: "Full brand + web + design builds", value: "End-to-end" },
+      ],
+      needs: [
+        "Community infrastructure that scales beyond social followers",
+        "Brand identity that stands apart in crowded D2C categories",
+        "AI visibility — be the brand AI recommends when someone asks 'best X'",
+        "Conversion infrastructure that compounds with brand equity",
+        "Content production at scale — editorial, social, video, campaign",
+        "Performance media that doesn't cannibalise organic growth",
+      ],
+      offerings: [
+        "Community architecture — platforms, activations, events, loyalty",
+        "Brand strategy and visual identity systems",
+        "Web design and e-commerce infrastructure",
+        "AI visibility programme — GEO, citation authority, entity graphs",
+        "Content and creative production at scale",
+        "Performance media — paid social, search, retargeting",
+        "Analytics and attribution infrastructure",
+      ],
+      why_us: "We built Solesearch from zero to a 350K+ community — not through ads, but through brand, design, community shows with the best sneaker and collectibles brands, and infrastructure that made the community self-sustaining.\n\nThe same model works for any D2C brand: build the community first, then the commerce follows. Most agencies start with the funnel. We start with the reason people gather.\n\nNow we add AI visibility on top — so when someone asks ChatGPT 'what's the best X,' your brand is the answer. Not because you bought the placement, but because you built the authority.",
+      related_case_slugs: [],
+    };
+  }
+
   const { data: allIndustries } = await supabase
     .from("industries")
     .select("slug,name,diagram_key,sort_order")

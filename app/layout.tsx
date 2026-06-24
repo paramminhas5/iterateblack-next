@@ -5,18 +5,18 @@ import { QueryProvider } from "@/providers/QueryProvider";
 
 export const metadata: Metadata = {
   title: {
-    default: "Iterate — AI Marketing Infrastructure That Compounds",
-    template: "%s | Iterate",
+    default: "Hyperiterate — AI Marketing Infrastructure That Compounds",
+    template: "%s | Hyperiterate",
   },
   description:
-    "Iterate is an AI-native marketing studio. We engineer AI citation authority, build agentic systems, and run compounding SEO infrastructure for founders who want to win the category — not the campaign.",
+    "Hyperiterate is an AI-native marketing studio. We engineer AI citation authority, build agentic systems, and run compounding SEO infrastructure for founders who want to win the category — not the campaign.",
   metadataBase: new URL("https://greattasteiterate.com"),
   openGraph: {
-    title: "Iterate — AI Marketing Infrastructure That Compounds",
+    title: "Hyperiterate — AI Marketing Infrastructure That Compounds",
     description:
-      "Iterate is an AI-native marketing studio. We engineer AI citation authority, build agentic systems, and run compounding SEO infrastructure for founders who want to win the category — not the campaign.",
+      "Hyperiterate is an AI-native marketing studio. We engineer AI citation authority, build agentic systems, and run compounding SEO infrastructure for founders who want to win the category — not the campaign.",
     type: "website",
-    siteName: "Iterate",
+    siteName: "Hyperiterate",
     locale: "en_IN",
     images: [
       {
@@ -66,9 +66,9 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "@id": "https://greattasteiterate.com/#organization",
-  name: "Iterate",
-  legalName: "Great Taste & Iterate",
-  alternateName: ["Great Taste & Iterate", "Iterate Studio"],
+  name: "Hyperiterate",
+  legalName: "Hyperiterate",
+  alternateName: ["Hyperiterate Studio"],
   description:
     "AI-native marketing studio running twelve AI-accelerated disciplines — from generative engine optimisation and agentic systems to SEO, brand, paid media, and creative — as one integrated system.",
   url: "https://greattasteiterate.com",
@@ -134,7 +134,7 @@ const websiteSchema = {
   "@type": "WebSite",
   "@id": "https://greattasteiterate.com/#website",
   url: "https://greattasteiterate.com",
-  name: "Iterate",
+  name: "Hyperiterate",
   publisher: { "@id": "https://greattasteiterate.com/#organization" },
   inLanguage: "en-IN",
   potentialAction: {

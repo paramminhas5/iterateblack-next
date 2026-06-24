@@ -32,7 +32,7 @@ export function Loader() {
   return (
     <div ref={ref} className={`loader ${out ? "out" : ""}`}>
       <div className="loader-mark" style={{ animation: "fadeIn .5s ease forwards" }}>
-        GREAT TASTE <span style={{ color: "var(--accent)" }}>&</span> ITERATE
+        HYPER<span style={{ color: "var(--accent)" }}>ITERATE</span>
       </div>
       <div className="loader-bar" />
       <style>{`@keyframes fadeIn{to{opacity:1}}`}</style>

@@ -244,7 +244,7 @@ export function ServicesContent() {
             ))}
           </aside>
 
-          <aside className="srv-rail-canvas" aria-hidden>
+          <aside className="srv-rail-canvas" aria-hidden data-scroll-progress={railP}>
             <div className="srv-scene" data-on={active === 0 ? "true" : undefined}><CitationPulse /></div>
             <div className="srv-scene" data-on={active === 1 ? "true" : undefined}><BrandSignalGraph /></div>
             <div className="srv-scene" data-on={active === 2 ? "true" : undefined}><AgentLoop /></div>
