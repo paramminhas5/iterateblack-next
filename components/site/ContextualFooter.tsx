@@ -62,6 +62,16 @@ function getContext(pathname: string): ContextConfig | null {
     };
   }
 
+  // How We Work page
+  if (pathname === "/how-we-work") {
+    return {
+      heading: "You've seen the model. Now tell us your category.",
+      sub: "Thirty minutes. We'll map your category's AI landscape and show you exactly what Iteration 01 delivers — and how fast.",
+      cta: "Start Iteration 01 →",
+      href: "/contact",
+    };
+  }
+
   // Home and everything else
   return {
     heading: "The conversation is free. The delay compounds.",

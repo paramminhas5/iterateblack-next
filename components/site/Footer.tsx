@@ -4,10 +4,8 @@ import { ContextualFooter } from "./ContextualFooter";
 export function Footer() {
   return (
     <footer>
-      {/* Page-contextual CTA strip — copy changes per route */}
       <ContextualFooter />
 
-      {/* Standard footer */}
       <div className="hairline-top site-footer" style={{ background: "var(--bg-deep)" }}>
         <div className="container-edge site-footer-grid">
           <div className="site-footer-cta">
@@ -18,7 +16,7 @@ export function Footer() {
                   Iterate
                 </div>
                 <p style={{ fontSize: 14, color: "var(--fg-muted)", lineHeight: 1.7, maxWidth: "38ch", marginBottom: 20 }}>
-                  AI-native marketing studio · Est. 2014 · Five people, zero account layers, one compounding system.
+                  AI-native marketing studio · Est. 2014 · Every discipline, AI-accelerated, one pod.
                 </p>
                 <Link href="/contact" className="btn-ghost" data-cursor="hover">
                   Start a project →
@@ -29,15 +27,21 @@ export function Footer() {
 
           <div className="site-footer-cols">
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <span className="mono" style={{ color: "var(--fg-dim)" }}>Work</span>
-              <Link href="/work" data-cursor="hover" style={{ fontSize: 13 }}>All engagements →</Link>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <span className="mono" style={{ color: "var(--fg-dim)" }}>Site</span>
+              <span className="mono" style={{ color: "var(--fg-dim)" }}>Navigate</span>
               <Link href="/services" data-cursor="hover" style={{ fontSize: 13 }}>Services</Link>
               <Link href="/industries" data-cursor="hover" style={{ fontSize: 13 }}>Industries</Link>
+              <Link href="/work" data-cursor="hover" style={{ fontSize: 13 }}>Work</Link>
+              <Link href="/how-we-work" data-cursor="hover" style={{ fontSize: 13 }}>How We Work</Link>
               <Link href="/about" data-cursor="hover" style={{ fontSize: 13 }}>About</Link>
               <Link href="/contact" data-cursor="hover" style={{ fontSize: 13 }}>Contact</Link>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <span className="mono" style={{ color: "var(--fg-dim)" }}>Services</span>
+              <Link href="/services" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>GEO</Link>
+              <Link href="/services" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>AI Visibility</Link>
+              <Link href="/services" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>Agentic Systems</Link>
+              <Link href="/services" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>SEO & Content</Link>
+              <Link href="/services" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>Brand & Creative</Link>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <span className="mono" style={{ color: "var(--fg-dim)" }}>Reach</span>
@@ -45,6 +49,7 @@ export function Footer() {
                 hello@greattasteiterate.com
               </a>
               <a href="https://linkedin.com/company/iterate-studio" target="_blank" rel="noopener noreferrer" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>LinkedIn</a>
+              <a href="https://paramminhas.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" style={{ fontSize: 13, color: "var(--fg-muted)" }}>Founder</a>
             </div>
           </div>
         </div>

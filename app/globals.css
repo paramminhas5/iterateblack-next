@@ -1390,3 +1390,188 @@ button { font-family: inherit; }
   flex-direction: column;
   gap: 3px;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SERVICES GRID — AI-accelerated traditional services
+   ═══════════════════════════════════════════════════════════════════ */
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+.service-card {
+  padding: 36px 32px;
+  border: 1px solid var(--hairline);
+  background: rgba(11, 15, 21, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.service-card-title {
+  font-weight: 300;
+  font-size: clamp(20px, 1.8vw, 26px);
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  line-height: 1.2;
+}
+.service-card-short {
+  font-size: 14px;
+  color: var(--fg);
+  line-height: 1.55;
+  font-weight: 400;
+}
+.service-card-body {
+  font-size: 14px;
+  color: var(--fg-muted);
+  line-height: 1.65;
+}
+.service-card-edge {
+  font-size: 13px;
+  color: var(--fg);
+  line-height: 1.6;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+  margin-top: auto;
+}
+@media (max-width: 900px) {
+  .services-grid { grid-template-columns: 1fr; gap: 18px; }
+  .service-card { padding: 28px 22px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HOW WE WORK — Pod roles grid
+   ═══════════════════════════════════════════════════════════════════ */
+
+.pod-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.pod-role-card {
+  padding: 28px 22px;
+  border: 1px solid var(--hairline);
+  background: rgba(11, 15, 21, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pod-role-title {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--fg);
+}
+.pod-role-desc {
+  font-size: 13px;
+  color: var(--fg-muted);
+  line-height: 1.55;
+}
+@media (max-width: 900px) {
+  .pod-roles-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+@media (max-width: 600px) {
+  .pod-roles-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TEAM — About page team grid
+   ═══════════════════════════════════════════════════════════════════ */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+}
+.team-card {
+  padding: 40px 32px;
+  border: 1px solid var(--hairline);
+  background: var(--panel);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.team-card-name {
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  line-height: 1.2;
+}
+.team-card-role {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.team-card-bio {
+  font-size: 14px;
+  color: var(--fg-muted);
+  line-height: 1.65;
+}
+.team-card-link {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg);
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 4px;
+  align-self: flex-start;
+  transition: color .2s, border-color .2s;
+}
+.team-card-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   INDUSTRIES — B2B / B2C segmented layout
+   ═══════════════════════════════════════════════════════════════════ */
+
+.ind-segment {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.ind-segment-header {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 32px;
+  align-items: center;
+}
+.ind-segment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.ind-segment-card {
+  padding: 32px 28px;
+  border: 1px solid var(--hairline);
+  background: rgba(11, 15, 21, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color .3s, background .3s;
+}
+.ind-segment-card:hover { border-color: var(--accent); }
+.ind-segment-card-title {
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 300;
+  color: var(--fg);
+  letter-spacing: -0.01em;
+}
+.ind-segment-card-what {
+  font-size: 13px;
+  color: var(--accent);
+  line-height: 1.5;
+}
+.ind-segment-card-proof {
+  font-size: 12px;
+  color: var(--fg-muted);
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline);
+  margin-top: auto;
+}
+@media (max-width: 768px) {
+  .ind-segment-grid { grid-template-columns: 1fr; }
+}
