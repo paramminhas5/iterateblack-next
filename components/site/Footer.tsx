@@ -33,6 +33,7 @@ export function Footer() {
               <Link href="/work" data-cursor="hover" style={{ fontSize: 13 }}>Work</Link>
               <Link href="/how-we-work" data-cursor="hover" style={{ fontSize: 13 }}>How We Work</Link>
               <Link href="/about" data-cursor="hover" style={{ fontSize: 13 }}>About</Link>
+              <Link href="/careers" data-cursor="hover" style={{ fontSize: 13 }}>Careers</Link>
               <Link href="/contact" data-cursor="hover" style={{ fontSize: 13 }}>Contact</Link>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>

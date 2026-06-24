@@ -31,10 +31,10 @@ const b2b = [
     proof: "Citation authority programme — zero to first recommendation in category",
   },
   {
-    slug: "saas",
+    slug: null,
     title: "SaaS & Technology",
     what: "GEO, AI visibility, demand generation, product-led growth infrastructure",
-    proof: "AI Citation Share tracking + full GEO programme for Series B SaaS",
+    proof: null,
   },
 ];
 
@@ -46,22 +46,22 @@ const b2c = [
     proof: "Pickyourtrail — copilot handles 70% of pre-sales. Monkspaces — occupancy router.",
   },
   {
-    slug: "real-estate",
+    slug: "proptech",
     title: "Real Estate & Co-living",
     what: "Demand infrastructure, buyer-intent scoring, community CRM, AI visibility",
     proof: "Coliwoo — full demand infrastructure, brief to live in 18 days",
   },
   {
-    slug: "tourism",
+    slug: null,
     title: "Tourism & Destination",
     what: "Destination brand, AI citation authority, experience platform design",
     proof: "Rajasthan Tourism — state authority brand + AI visibility programme",
   },
   {
-    slug: "d2c",
+    slug: null,
     title: "D2C & E-commerce",
-    what: "Conversion infrastructure, performance creative, retention systems, AI personalisation",
-    proof: "Full-funnel AI-accelerated demand systems for consumer brands",
+    what: "Community building, conversion infrastructure, performance creative, brand design",
+    proof: "Solesearch — sneaker & collectibles marketplace, 350K+ community, 30+ brand shows",
   },
 ];
 
@@ -89,7 +89,7 @@ export function IndustriesIndex({ industries }: IndustriesIndexProps) {
           </div>
           <h1 className="display display-2xl hero-headline">
             <ScrambleCycler
-              phrases={["Two markets.", "One model.", "AI-accelerated."]}
+              phrases={["Multiple sectors.", "One agnostic model.", "AI-accelerated."]}
               scrambleMs={520}
               holdMs={900}
             />
@@ -119,15 +119,31 @@ export function IndustriesIndex({ industries }: IndustriesIndexProps) {
 
           <div className="ind-segment-grid">
             {b2b.map((item, i) => (
-              <Reveal key={item.slug} delay={i * 80}>
-                <Link href={`/industries/${item.slug}`} className="ind-segment-card" data-cursor="view">
-                  <div className="ind-segment-card-title">{item.title}</div>
-                  <div className="ind-segment-card-what">{item.what}</div>
-                  <div className="ind-segment-card-proof">
-                    <span className="mono" style={{ color: "var(--accent)", fontSize: 10, marginRight: 8 }}>PROOF</span>
-                    {item.proof}
-                  </div>
-                </Link>
+              <Reveal key={item.title} delay={i * 80}>
+                {item.slug ? (
+                  <Link href={`/industries/${item.slug}`} className="ind-segment-card" data-cursor="view">
+                    <div className="ind-segment-card-title">{item.title}</div>
+                    <div className="ind-segment-card-what">{item.what}</div>
+                    {item.proof && (
+                      <div className="ind-segment-card-proof">
+                        <span className="mono" style={{ color: "var(--accent)", fontSize: 10, marginRight: 8 }}>PROOF</span>
+                        {item.proof}
+                      </div>
+                    )}
+                  </Link>
+                ) : (
+                  <Link href="/contact" className="ind-segment-card" data-cursor="hover">
+                    <div className="ind-segment-card-title">{item.title}</div>
+                    <div className="ind-segment-card-what">{item.what}</div>
+                    {item.proof && (
+                      <div className="ind-segment-card-proof">
+                        <span className="mono" style={{ color: "var(--accent)", fontSize: 10, marginRight: 8 }}>PROOF</span>
+                        {item.proof}
+                      </div>
+                    )}
+                    <span className="mono" style={{ color: "var(--accent)", fontSize: 10, marginTop: 8 }}>TALK TO US →</span>
+                  </Link>
+                )}
               </Reveal>
             ))}
           </div>
@@ -153,15 +169,31 @@ export function IndustriesIndex({ industries }: IndustriesIndexProps) {
 
           <div className="ind-segment-grid">
             {b2c.map((item, i) => (
-              <Reveal key={item.slug} delay={i * 80}>
-                <Link href={`/industries/${item.slug}`} className="ind-segment-card" data-cursor="view">
-                  <div className="ind-segment-card-title">{item.title}</div>
-                  <div className="ind-segment-card-what">{item.what}</div>
-                  <div className="ind-segment-card-proof">
-                    <span className="mono" style={{ color: "var(--accent)", fontSize: 10, marginRight: 8 }}>PROOF</span>
-                    {item.proof}
-                  </div>
-                </Link>
+              <Reveal key={item.title} delay={i * 80}>
+                {item.slug ? (
+                  <Link href={`/industries/${item.slug}`} className="ind-segment-card" data-cursor="view">
+                    <div className="ind-segment-card-title">{item.title}</div>
+                    <div className="ind-segment-card-what">{item.what}</div>
+                    {item.proof && (
+                      <div className="ind-segment-card-proof">
+                        <span className="mono" style={{ color: "var(--accent)", fontSize: 10, marginRight: 8 }}>PROOF</span>
+                        {item.proof}
+                      </div>
+                    )}
+                  </Link>
+                ) : (
+                  <Link href="/contact" className="ind-segment-card" data-cursor="hover">
+                    <div className="ind-segment-card-title">{item.title}</div>
+                    <div className="ind-segment-card-what">{item.what}</div>
+                    {item.proof && (
+                      <div className="ind-segment-card-proof">
+                        <span className="mono" style={{ color: "var(--accent)", fontSize: 10, marginRight: 8 }}>PROOF</span>
+                        {item.proof}
+                      </div>
+                    )}
+                    <span className="mono" style={{ color: "var(--accent)", fontSize: 10, marginTop: 8 }}>TALK TO US →</span>
+                  </Link>
+                )}
               </Reveal>
             ))}
           </div>

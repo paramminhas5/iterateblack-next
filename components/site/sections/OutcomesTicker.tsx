@@ -7,6 +7,7 @@ const outcomes = [
   { client: "Pickyourtrail", result: "Itinerary copilot handles 70% of pre-sales volume" },
   { client: "Monkspaces", result: "Zero AI citations to first recommendation in co-living category" },
   { client: "BILLIONE", result: "Airside operations platform — PMO-acknowledged" },
+  { client: "Solesearch", result: "Sneaker marketplace — 350K+ community, 30+ brand shows, full brand & design" },
   { client: "Rajasthan Tourism", result: "AI citation authority across ChatGPT, Perplexity, Google AI Mode" },
   { client: "Noida Intl Airport", result: "Brand and AI visibility infrastructure for India's newest airport" },
   { client: "Coliwoo", result: "Full demand infrastructure — brief to live in 18 days" },
