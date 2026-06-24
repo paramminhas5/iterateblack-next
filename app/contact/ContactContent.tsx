@@ -41,7 +41,7 @@ export function ContactContent() {
             <span className="tick" />
             <span className="eyebrow eyebrow-muted">Start a conversation · 30 min</span>
           </div>
-          <h1 className="display display-xl" style={{ maxWidth: "14ch" }}>
+          <h1 className="display display-lg" style={{ maxWidth: "14ch" }}>
             Tell us where you want<br />
             <span style={{ color: "var(--fg-muted)" }}>to be the obvious choice.</span>
           </h1>

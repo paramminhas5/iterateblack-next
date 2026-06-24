@@ -59,6 +59,11 @@ export function useThreeScene(setup: SceneSetup) {
       io.observe(wrap);
 
       const computeProgress = () => {
+        // Check for a parent-provided progress override (used in sticky containers)
+        const override = wrap.closest("[data-scroll-progress]");
+        if (override) {
+          return parseFloat(override.getAttribute("data-scroll-progress") || "0");
+        }
         const r = wrap.getBoundingClientRect();
         const vh = window.innerHeight;
         // 0 when section just enters bottom, 1 when it leaves top
