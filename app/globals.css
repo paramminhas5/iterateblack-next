@@ -1575,3 +1575,36 @@ button { font-family: inherit; }
 @media (max-width: 768px) {
   .ind-segment-grid { grid-template-columns: 1fr; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   WORK ROW COMPACT — homepage selected work, smaller single-line
+   ═══════════════════════════════════════════════════════════════════ */
+
+.work-row-compact {
+  padding-block: clamp(20px, 3vw, 32px);
+}
+.work-row-compact .work-title {
+  font-size: clamp(18px, 2.4vw, 32px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SERVICE CARD ICONS — minimal line-art SVG icons
+   ═══════════════════════════════════════════════════════════════════ */
+
+.service-card-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  opacity: 0.7;
+  color: var(--accent);
+}
+.service-card-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}

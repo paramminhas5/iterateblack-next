@@ -877,14 +877,19 @@ export function CitationPulse() {
         rings.forEach((r: any, i: number) => {
           r.material.opacity = 0.12 + Math.max(0, Math.sin(t * 0.6 + i * 0.4)) * 0.18 + p * 0.1;
         });
-        // citations light up sequentially based on p
-        const lit = Math.floor(p * nodes.length);
+        // citations light up continuously with time + scroll boost
+        const progress = Math.min(1, (Math.sin(t * 0.25) + 1) / 2 * 0.4 + p * 0.7);
+        const lit = Math.floor(progress * nodes.length);
         nodes.forEach((n: any, i: number) => {
-          n.material.opacity = i <= lit ? 1 : 0.35;
-          n.material.color.setHex(i <= lit ? ACCENT : LINE);
+          const isLit = i <= lit;
+          const pulse = Math.sin(t * 1.2 + i * 0.5) * 0.2;
+          n.material.opacity = isLit ? 0.8 + pulse : 0.35;
+          n.material.color.setHex(isLit ? ACCENT : LINE);
         });
         lines.forEach((l: any, i: number) => {
-          l.material.opacity = i <= lit ? 0.5 : 0;
+          const isLit = i <= lit;
+          const pulse = Math.sin(t * 1.5 + i * 0.3) * 0.15;
+          l.material.opacity = isLit ? 0.45 + pulse : 0;
         });
       },
     };
@@ -894,7 +899,7 @@ export function CitationPulse() {
 }
 
 /* ───────────────────────── 18 · BrandSignalGraph ───────────────────────── */
-/** Scatter of mention/sentiment dots that converges into a rising trend line. */
+/** Radial authority map: citation signals pulse outward from central brand node. */
 export function BrandSignalGraph() {
   const setup = useCallback((ctx: any) => {
     const { THREE, scene, size } = ctx;
@@ -904,53 +909,80 @@ export function BrandSignalGraph() {
     const group = new THREE.Group();
     scene.add(group);
 
-    // axis frame
-    const axis = new THREE.LineSegments(
-      new THREE.EdgesGeometry(new THREE.PlaneGeometry(5, 3, 1, 1)),
-      new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.18 })
+    // Central brand node — prominent
+    const core = new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.28, 1)),
+      new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.95 })
     );
-    group.add(axis);
+    group.add(core);
 
-    // scatter points
-    const N = 60;
-    const positions: any[] = [];
-    const targets: any[] = [];
-    for (let i = 0; i < N; i++) {
-      const x = -2.4 + (i / (N - 1)) * 4.8;
-      const yTarget = -1.0 + Math.pow(i / (N - 1), 1.4) * 2.2; // rising curve
-      const yScatter = yTarget + (Math.random() - 0.5) * 1.6;
-      positions.push(new THREE.Vector3(x, yScatter, 0));
-      targets.push(new THREE.Vector3(x, yTarget, 0));
+    // Concentric authority rings (signal waves)
+    const waves: any[] = [];
+    for (let i = 1; i <= 6; i++) {
+      const radius = 0.5 * i;
+      const pts: any[] = [];
+      const segments = 64;
+      for (let j = 0; j <= segments; j++) {
+        const a = (j / segments) * Math.PI * 2;
+        pts.push(new THREE.Vector3(Math.cos(a) * radius, Math.sin(a) * radius, 0));
+      }
+      const ring = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(pts),
+        new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0 })
+      );
+      group.add(ring);
+      waves.push({ ring, radius, phase: i * 0.8 });
     }
 
-    const dotGeo = new THREE.BufferGeometry();
-    const buf = new Float32Array(N * 3);
-    positions.forEach((v, i) => { buf[i*3]=v.x; buf[i*3+1]=v.y; buf[i*3+2]=v.z; });
-    dotGeo.setAttribute("position", new THREE.BufferAttribute(buf, 3));
-    const dotMat = new THREE.PointsMaterial({ color: LINE, size: 0.08, transparent: true, opacity: 0.8 });
-    const dots = new THREE.Points(dotGeo, dotMat);
-    group.add(dots);
+    // Competitor nodes that fade as authority grows
+    const competitors: any[] = [];
+    for (let i = 0; i < 5; i++) {
+      const a = (i / 5) * Math.PI * 2 + 0.3;
+      const r = 2.8 + Math.random() * 0.6;
+      const pos = new THREE.Vector3(Math.cos(a) * r, Math.sin(a) * r, 0);
+      const node = new THREE.LineSegments(
+        new THREE.EdgesGeometry(new THREE.OctahedronGeometry(0.12, 0)),
+        new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.6 })
+      );
+      node.position.copy(pos);
+      group.add(node);
+      competitors.push({ node, baseOpacity: 0.6 });
+    }
 
-    // trend line (built from target points)
-    const lineGeo = new THREE.BufferGeometry().setFromPoints(targets);
-    const lineMat = new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0 });
-    const line = new THREE.Line(lineGeo, lineMat);
-    group.add(line);
+    // Signal rays from center outward
+    const rays: any[] = [];
+    for (let i = 0; i < 12; i++) {
+      const a = (i / 12) * Math.PI * 2;
+      const end = new THREE.Vector3(Math.cos(a) * 3.2, Math.sin(a) * 3.2, 0);
+      const geo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), end]);
+      const ray = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0 }));
+      group.add(ray);
+      rays.push({ ray, phase: i * 0.5 });
+    }
 
     return {
       camera,
-      update: (_t: number, p: number) => {
-        // dots migrate from scatter → trend as p
-        const attr = dotGeo.getAttribute("position") as any;
-        for (let i = 0; i < N; i++) {
-          const sx = positions[i].x, sy = positions[i].y;
-          const tx = targets[i].x, ty = targets[i].y;
-          attr.array[i*3]   = sx + (tx - sx) * p;
-          attr.array[i*3+1] = sy + (ty - sy) * p;
-        }
-        attr.needsUpdate = true;
-        line.material.opacity = p * 0.95;
-        dotMat.color.setHex(p > 0.6 ? ACCENT : LINE);
+      update: (t: number, p: number) => {
+        group.rotation.z = t * 0.02;
+        core.rotation.y = t * 0.4;
+        core.rotation.x = t * 0.2;
+
+        // Waves pulse outward continuously
+        waves.forEach(({ ring, phase }) => {
+          const wave = Math.sin(t * 0.8 - phase);
+          ring.material.opacity = Math.max(0, wave) * 0.5 + p * 0.2;
+        });
+
+        // Rays pulse
+        rays.forEach(({ ray, phase }) => {
+          const pulse = Math.sin(t * 1.2 - phase);
+          ray.material.opacity = Math.max(0, pulse) * 0.35 + p * 0.15;
+        });
+
+        // Competitors fade as p increases (your authority displaces them)
+        competitors.forEach(({ node }) => {
+          node.material.opacity = Math.max(0.1, 0.6 - p * 0.5);
+        });
       },
     };
   }, []);

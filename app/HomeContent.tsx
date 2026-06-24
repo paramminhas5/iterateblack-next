@@ -103,17 +103,17 @@ export function HomeContent({ works, industries }: HomeContentProps) {
             </Reveal>
             <h1 className="display display-2xl hero-headline">
               <ScrambleCycler
-                phrases={["AI chooses first.", "We make it choose you.", "Every week. Compounding."]}
+                phrases={["We design.", "We build.", "We iterate."]}
                 scrambleMs={520}
-                holdMs={1100}
+                holdMs={850}
               />
               <span style={{ display: "block", color: "var(--fg-muted)", marginTop: 8 }}>
-                Twelve disciplines. One pod. AI-accelerated.
+                Until the machine chooses you first.
               </span>
             </h1>
             <Reveal delay={2800}>
               <p className="lead" style={{ marginTop: 36, marginBottom: 36, maxWidth: "44ch" }}>
-                AI already has a favourite in your category. We engineer the infrastructure that makes it you — across every channel, every engine, every week.
+                AI already has a favourite in your category. Six months from now, it should be you.
               </p>
               <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
                 <Link href="/contact" className="btn-primary" data-cursor="hover">Start Iteration 01 →</Link>
@@ -293,7 +293,7 @@ export function HomeContent({ works, industries }: HomeContentProps) {
         </div>
         <div>
           {(works).map((w, i) => (
-            <Link key={w.slug} href={`/work/${w.slug}`} className="work-row" data-cursor="view">
+            <Link key={w.slug} href={`/work/${w.slug}`} className="work-row work-row-compact" data-cursor="view">
               <span className="work-num">{String(i + 1).padStart(2, "0")}</span>
               <span className="work-title">{w.title}</span>
               <span className="work-tags">{(w.tags ?? []).slice(0, 2).join(" · ")}</span>
