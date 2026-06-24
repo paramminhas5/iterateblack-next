@@ -2,37 +2,45 @@
 
 import Link from "next/link";
 import { Reveal } from "@/components/site/Reveal";
-import { ScrambleHeadline } from "@/components/site/ScrambleHeadline";
+import { ScrambleCycler } from "@/components/site/ScrambleCycler";
 
-const team = [
+const leadership = [
   {
     name: "Param Minhas",
-    role: "Founder & Director",
-    bio: "Built Iterate in 2014 when the gap between what agencies delivered and what operators needed became untenable. Eleven years of building marketing infrastructure across energy, aviation, travel, hospitality, and SaaS. Believes the best marketing is indistinguishable from product.",
+    role: "Founder · AI, Brand, Growth, Product",
+    bio: "Built Iterate in 2014 when the gap between what agencies delivered and what operators needed became untenable. Eleven years of building marketing infrastructure across energy, aviation, travel, hospitality, and SaaS. Sees the full picture — where brand, product, and AI systems converge into compounding advantage.",
     link: "https://paramminhas.com",
     linkLabel: "paramminhas.com",
   },
   {
     name: "Arjun Mehta",
-    role: "Head of Strategy",
-    bio: "Twelve years in brand and category strategy — from FMCG to B2B SaaS. Responsible for positioning, GTM architecture, and the narrative layer that makes everything else stick. Thinks in market gaps, not campaign briefs.",
-    link: null,
-    linkLabel: null,
-  },
-  {
-    name: "Rohan Kapoor",
-    role: "Head of Engineering",
-    bio: "Full-stack engineer turned AI systems architect. Built the dynamic pricing engine for ChargeZone, the itinerary copilot for Pickyourtrail, and the occupancy router for Monkspaces. Owns every line of production code we ship.",
+    role: "Head of B2B",
+    bio: "Fifteen years in enterprise infrastructure, operational AI, and B2B go-to-market. Responsible for every engagement where the output is a system that runs — pricing engines, operations platforms, demand infrastructure. Previously built and scaled B2B revenue engines across SaaS and industrial verticals.",
     link: null,
     linkLabel: null,
   },
   {
     name: "Priya Sharma",
-    role: "Head of GEO & AI Visibility",
-    bio: "Eight years in SEO, the last three pioneering generative engine optimization before the industry had a name for it. Runs the probe systems, citation tracking, and editorial signal engineering across every client engagement.",
+    role: "Head of B2C",
+    bio: "Twelve years in consumer brand, demand systems, and conversion infrastructure. Owns every engagement where the output is category dominance — AI visibility, brand authority, performance systems. Built demand infrastructure for travel, hospitality, D2C, and real estate brands across India and Southeast Asia.",
     link: null,
     linkLabel: null,
   },
+  {
+    name: "Rohan Kapoor",
+    role: "Head of AI & Engineering",
+    bio: "Full-stack engineer turned AI systems architect. Built the dynamic pricing engine for ChargeZone, the itinerary copilot for Pickyourtrail, and the occupancy router for Monkspaces. Owns every line of production code we ship and every agent in the operating system.",
+    link: null,
+    linkLabel: null,
+  },
+];
+
+const networkRoles = [
+  { label: "Design", count: "15+" },
+  { label: "Growth & Performance", count: "20+" },
+  { label: "Engineering", count: "18+" },
+  { label: "Content & Editorial", count: "12+" },
+  { label: "Vertical Specialists", count: "15+" },
 ];
 
 const tenets = [
@@ -73,9 +81,15 @@ export function AboutContent() {
             <span className="tick" />
             <span className="eyebrow eyebrow-muted">About · est. 2014</span>
           </div>
-          <h1 className="display display-xl" style={{ maxWidth: "20ch" }}>
-            <ScrambleHeadline as="span" text="Built by operators." triggerOnView accent={false} duration={650} /><br />
-            <span style={{ color: "var(--fg-muted)" }}>Not by a holding company.</span>
+          <h1 className="display display-2xl hero-headline">
+            <ScrambleCycler
+              phrases={["We build brands.", "We ship systems.", "We compound advantage."]}
+              scrambleMs={520}
+              holdMs={900}
+            />
+            <span style={{ display: "block", color: "var(--fg-muted)", marginTop: 8, fontSize: "0.38em", letterSpacing: "-0.01em", lineHeight: 1.4, fontWeight: 200 }}>
+              Three leaders. Eighty specialists. One integrated network.
+            </span>
           </h1>
         </Reveal>
       </section>
@@ -105,52 +119,21 @@ export function AboutContent() {
         </div>
       </section>
 
-      {/* ─── THE THESIS ─── */}
-      <section className="chapter container-edge hairline-top" style={{ background: "var(--bg-deep)" }}>
-        <Reveal>
-          <div style={{ display: "flex", gap: 18, marginBottom: 32 }}>
-            <span className="tick" />
-            <span className="eyebrow eyebrow-muted">02 · The thesis</span>
-          </div>
-          <h2 className="display display-lg" style={{ maxWidth: "20ch", marginBottom: 40 }}>
-            <ScrambleHeadline
-              as="span"
-              text="An AI is choosing your category winner. Right now."
-              triggerOnView
-              accent={false}
-              duration={900}
-            />
-          </h2>
-          <p className="lead" style={{ maxWidth: "60ch", marginBottom: 22 }}>
-            That AI doesn't read your ads, your Instagram presence, or your agency's monthly report. It reads your structured data, your citation authority, and the clarity of your entity definition across the web.
-          </p>
-          <p className="lead" style={{ maxWidth: "60ch", marginBottom: 22, color: "var(--fg-muted)" }}>
-            The brand that built those signals first is the one it defaults to. Not because it's better. Because it was ready. And once an AI has a default answer for a category, dislodging it requires sustained infrastructure — not a campaign.
-          </p>
-          <p className="lead" style={{ maxWidth: "60ch", color: "var(--fg)" }}>
-            90% of B2B buying will flow through AI-agent intermediaries by 2028 (Gartner). The gap between brands structured for this and those that aren't compounds weekly. We built Iterate to put our clients on the right side of that gap.
-          </p>
-        </Reveal>
-      </section>
-
-      {/* ─── THE TEAM ─── */}
+      {/* ─── THE TEAM — Leadership ─── */}
       <section className="chapter container-edge hairline-top">
         <Reveal>
           <div style={{ display: "flex", gap: 18, marginBottom: 32 }}>
             <span className="tick" />
-            <span className="eyebrow eyebrow-muted">03 · The team</span>
+            <span className="eyebrow eyebrow-muted">02 · Leadership</span>
           </div>
-          <h2 className="display display-md" style={{ maxWidth: "20ch", marginBottom: 16 }}>
-            Four people who run the studio.{" "}
-            <span style={{ color: "var(--fg-muted)" }}>Plus the agents they built.</span>
+          <h2 className="display display-md" style={{ maxWidth: "22ch", marginBottom: 16 }}>
+            Three leaders who've each spent a decade{" "}
+            <span style={{ color: "var(--fg-muted)" }}>building what most agencies outsource.</span>
           </h2>
-          <p className="lead" style={{ maxWidth: "52ch" }}>
-            No middle management. No account executives. No departments. Four operators who've each spent a decade building what most agencies outsource.
-          </p>
         </Reveal>
 
         <div className="team-grid">
-          {team.map((t, i) => (
+          {leadership.map((t, i) => (
             <Reveal key={t.name} delay={i * 100} className="team-card">
               <div className="team-card-role">{t.role}</div>
               <div className="team-card-name">{t.name}</div>
@@ -165,8 +148,34 @@ export function AboutContent() {
         </div>
       </section>
 
+      {/* ─── THE NETWORK ─── */}
+      <section className="chapter container-edge hairline-top" style={{ background: "var(--bg-deep)" }}>
+        <Reveal>
+          <div style={{ display: "flex", gap: 18, marginBottom: 32 }}>
+            <span className="tick" />
+            <span className="eyebrow eyebrow-muted">03 · The network</span>
+          </div>
+          <h2 className="display display-md" style={{ maxWidth: "22ch", marginBottom: 24 }}>
+            80+ specialists.{" "}
+            <span style={{ color: "var(--fg-muted)" }}>All working within the Iterate operating system.</span>
+          </h2>
+          <p className="lead" style={{ maxWidth: "52ch", marginBottom: 48 }}>
+            Beyond the core leadership, Iterate operates with an integrated network of designers, engineers, growth specialists, performance marketers, and vertical experts. They're not freelancers on call — they work within our systems, our tooling, and our quality bar. Every engagement draws from this network based on what the work demands.
+          </p>
+        </Reveal>
+
+        <div className="network-grid">
+          {networkRoles.map((r, i) => (
+            <Reveal key={r.label} delay={i * 80} className="network-card">
+              <div className="network-card-count">{r.count}</div>
+              <div className="network-card-label">{r.label}</div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* ─── OPERATING TENETS ─── */}
-      <section className="chapter hairline-top" style={{ background: "var(--bg-deep)" }}>
+      <section className="chapter hairline-top">
         <div className="container-edge">
           <Reveal>
             <div style={{ display: "flex", gap: 18, marginBottom: 56 }}>
@@ -180,10 +189,7 @@ export function AboutContent() {
             <Reveal key={t.num} className="process-row">
               <div className="process-num">{t.num}</div>
               <div>
-                <h3
-                  className="display"
-                  style={{ fontSize: "clamp(26px,3.2vw,44px)", fontWeight: 200, marginBottom: 14 }}
-                >
+                <h3 className="display" style={{ fontSize: "clamp(26px,3.2vw,44px)", fontWeight: 200, marginBottom: 14 }}>
                   {t.title}
                 </h3>
                 <p className="lead">{t.body}</p>
@@ -194,7 +200,7 @@ export function AboutContent() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="chapter container-edge hairline-top">
+      <section className="chapter container-edge hairline-top" style={{ background: "var(--bg-deep)" }}>
         <Reveal>
           <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
             <span className="tick tick-lg" />
